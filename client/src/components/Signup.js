@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-class Login extends Component {
+class Signup extends Component {
 
   state = {
+    name: '',
     email: '',
     password: ''
   }
@@ -19,6 +20,12 @@ class Login extends Component {
     const { name, email, password } = this.state;
     return (
       <div>
+        <div className="field">
+          <label className="label">Name</label>
+          <div className="control">
+            <input className="input" type="text" name='name' placeholder="enter your name" value={name} onChange={this.handleChane} />
+          </div>
+        </div>
         <div className="field">
           <label className="label">Email</label>
           <div className="control has-icons-left has-icons-right">
@@ -48,11 +55,11 @@ class Login extends Component {
           </p>
         </div>
         <div>
-          <Link to='/signup'>Create an account?</Link>
+          <span>Already has an account, </span><Link to='/login'>login?</Link>
         </div>
       </div>
     );
   }
 }
 
-export default Login;
+export default Signup;
