@@ -1,50 +1,59 @@
-const express = require('express');
-const path = require('path'); 
-const mongoose = require("mongoose");
+const express = require("express");
 const session = require("express-session");
+const app = express();
+const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const bodyParser = require("body-parser");
-const morgan = require('morgan');
 const cors = require("cors");
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config');
+const path = require("path");
+const port = 8000;
 
-const app = express();
+mongoose.connect(
+ "mongodb://localhost/casualworld",
+ { useNewUrlParser: true },
+ function(err, connection) {
+  if (err) throw err;
+  else console.log("connected to mongodb");
+ }
+)
 
-// Connecting to database
-mongoose.connect('mongodb://localhost/casualworld', { useNewUrlParser: true }, function (error) {
-  if (error) return console.log(`Could not connect to mongodb: ${error}`);
-  else return console.log('Connected to mongodb');
-})
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.set("views", path.join(__dirname, "./server/views"));
+app.set("view engine", "ejs");
 
 app.use(
-  session({
-    secret: "casualworld",
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({ url: "mongodb://localhost/casualworld-session" })
-  })
+ session({
+  secret: "casualworld",
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({ url: "mongodb://localhost/casualworld-session" })
+ })
 );
 
-// Webpack config
-if (process.env.NODE_ENV === 'development') {
-  console.log('in webpack hot middleware');
-  const compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-  }));
+if (process.env.NODE_ENV === "development") {
+ var webpack = require("webpack");
+ var webpackConfig = require("./webpack.config");
+ var compiler = webpack(webpackConfig);
+
+ app.use(
+  require("webpack-dev-middleware")(compiler, {
+   noInfo: true,
+   publicPath: webpackConfig.output.publicPath
+  })
+ );
+
+ app.use(require("webpack-hot-middleware")(compiler));
 }
 
-// setting view
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, './server/views'));
+app.use(cors());
 
-// setting routes
-app.use(require('./server/routes/index'));
-app.use('/api/v1', require('./server/routes/api/v1.js'));
+app.use("/api/v1", require("./server/routes/api/v1"));
+app.use(require("./server/routes/index"));
 
-app.listen(8001, () => {
-  console.log('server is running on 8001');
-})
+app.listen(port, () => {
+ console.log(`server is running on http://localhost:${port}`);
+});

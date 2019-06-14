@@ -1,6 +1,5 @@
 /* eslint-disable */
 var webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -35,27 +34,13 @@ module.exports = {
             options: {}
           }
         ]
-      },
-      {
-        test: /\.(ogg|mp3|wav|mpe?g)$/i,
-        use: 'file-loader'
-      },
-      {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
       }
     ]
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'app.js'),
-    compress: true,
-    port: 4000
-  },
   output: {
+    filename: 'bundle.js',
     path: __dirname + '/dist/bundle/',
-    publicPath: '/static/',
-    filename: "[name].bundle.js",
-    chunkFilename: "[name].bundle.js",
+    publicPath: '/static/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -66,7 +51,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: "bundle.css",
-    }),
-    new HtmlWebpackPlugin()
+    })
   ]
 }
