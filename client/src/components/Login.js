@@ -16,9 +16,9 @@ class Login extends Component {
   }
 
   render() {
-    const { name, email, password } = this.state;
+    const { email, password } = this.state;
     return (
-      <div>
+      <div className='form-wrapper'>
         <div className="field">
           <label className="label">Email</label>
           <div className="control has-icons-left has-icons-right">
@@ -47,7 +47,7 @@ class Login extends Component {
             </button>
           </p>
         </div>
-        <div>
+        <div className='center'>
           <Link to='/signup'>Create an account?</Link>
         </div>
       </div>
