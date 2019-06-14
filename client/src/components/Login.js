@@ -23,6 +23,10 @@ class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     const data = { email, password }
+
+    if (email.length == 0 && password.length == 0) return this.setState({
+      message: 'Please fill the form'
+    })
     this.props.dispatch(actions.loginUser(data, success => {
       const { message, error } = this.props;
       if (success) {

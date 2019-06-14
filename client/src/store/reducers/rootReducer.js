@@ -1,7 +1,8 @@
 const initState = {
   message: '',
   error: '',
-  user: {}
+  currentUser: JSON.parse(localStorage.getItem('user')) || null,
+  currentToken: localStorage.getItem('token') || null,
 }
 
 function rootReducer (state = initState, action) {
@@ -23,6 +24,8 @@ function rootReducer (state = initState, action) {
     case 'LOGIN_SUCCESS': {
       return {
         ...state,
+        currentUser: action.user,
+        currentToken: action.token,
         message: action.message,
         user: action.user
       }

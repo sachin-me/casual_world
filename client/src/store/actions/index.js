@@ -41,10 +41,15 @@ const actions = {
       .then(res => res.json())
       .then(data => {
         if (data.message) {
+          const { userInfo, token, message } = data;
+          let jwt = `Bearer ${token}`
+          localStorage.setItem('token', jwt);
+          localStorage.setItem('user', JSON.stringify(userInfo));
           dispatch({
             type: 'LOGIN_SUCCESS',
-            message: data.message,
-            user: data.userInfo
+            message,
+            token: jwt,
+            user: userInfo
           })
           cb(true)
         } else {

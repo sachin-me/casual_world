@@ -50,10 +50,10 @@ module.exports = {
       }, 'secret');
       res.json({
         message: `${name}, Successfully logged in`,
+        token,
         userInfo: {
           name,
-          email,
-          token
+          email
         }
       })
     })(req, res, next);
