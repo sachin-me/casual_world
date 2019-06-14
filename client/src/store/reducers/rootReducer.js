@@ -1,6 +1,7 @@
 const initState = {
   message: '',
-  error: ''
+  error: '',
+  user: {}
 }
 
 function rootReducer (state = initState, action) {
@@ -13,6 +14,21 @@ function rootReducer (state = initState, action) {
     }
 
     case 'CREATE_USER_FAIL': {
+      return {
+        ...state,
+        error: action.error
+      }
+    }
+
+    case 'LOGIN_SUCCESS': {
+      return {
+        ...state,
+        message: action.message,
+        user: action.user
+      }
+    }
+
+    case 'LOGIN_FAIL': {
       return {
         ...state,
         error: action.error

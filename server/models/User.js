@@ -10,13 +10,10 @@ const userSchema = new Schema({
 })
 
 userSchema.pre('save', function(next) {
-  console.log(this.password, 'check password');
   if(this.password) {
-    console.log('Inside pre save')
     this.password = bcrypt.hashSync(this.password, SALT_ROUNDS);
     next();
   } else {
-    console.log('passed')
     next();
   }
 });

@@ -27,6 +27,36 @@ const actions = {
         }
       })
     }
+  },
+
+  loginUser: (data, cb) => {
+    return dispatch => {
+      fetch(`${uri}/loginuser`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message) {
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            message: data.message,
+            user: data.userInfo
+          })
+          cb(true)
+        } else {
+          dispatch({
+            type: 'LOGIN_FAIL',
+            error: data.error
+          })
+          cb(false)
+        }
+        console.log(data, 'logging user in')
+      })
+    }
   }
 }
 

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import actions from '../store/actions';
 
 class Login extends Component {
 
   state = {
     email: '',
-    password: ''
+    password: '',
+    message: '',
+    error: ''
   }
 
   handleChane = (e) => {
@@ -15,37 +19,65 @@ class Login extends Component {
     })
   }
 
-  render() {
+  handleSubmit = (e) => {
+    e.preventDefault();
     const { email, password } = this.state;
+    const data = { email, password }
+    this.props.dispatch(actions.loginUser(data, success => {
+      const { message, error } = this.props;
+      if (success) {
+        this.setState({
+          message: message
+        })
+      } else {
+        this.setState({
+          error: error
+        })
+      }
+    }))
+  }
+
+  render() {
+    const { email, password, message, error } = this.state;
     return (
       <div className='form-wrapper'>
-        <div className="field">
-          <label className="label">Email</label>
-          <div className="control has-icons-left has-icons-right">
-            <input className="input" type="email" name='email' placeholder="Email input" value={email} onChange={this.handleChane} />
-            <span className="icon is-small is-left">
-              <i className="fas fa-envelope"></i>
-            </span>
-            <span className="icon is-small is-right">
-              <i className="fas fa-exclamation-triangle"></i>
-            </span>
+        <div>
+          <h3 className='center'>Login</h3>
+        </div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control has-icons-left has-icons-right">
+              <input className="input" type="email" name='email' placeholder="Email input" value={email} onChange={this.handleChane} />
+              <span className="icon is-small is-left">
+                <i className="fas fa-envelope"></i>
+              </span>
+              <span className="icon is-small is-right">
+                <i className="fas fa-exclamation-triangle"></i>
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="field">
-          <label className="label">Password</label>
-          <p className="control has-icons-left">
-            <input className="input" type="password" name='password' placeholder="Password" value={password} onChange={this.handleChane} />
-            <span className="icon is-small is-left">
-              <i className="fas fa-lock"></i>
-            </span>
-          </p>
-        </div>
-        <div className="field">
-          <p className="control">
-            <button className="button is-primary">
-              Login
-            </button>
-          </p>
+          <div className="field">
+            <label className="label">Password</label>
+            <p className="control has-icons-left">
+              <input className="input" type="password" name='password' placeholder="Password" value={password} onChange={this.handleChane} />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control">
+              <button className="button is-primary">
+                Login
+              </button>
+            </p>
+          </div>
+        </form>
+        <div className="signup-status center">
+          {
+            (message && message != 'undefined') ? message : error
+          }
         </div>
         <div className='center'>
           <Link to='/signup'>Create an account?</Link>
@@ -55,4 +87,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    message: state.message,
+    error: state.error
+  }
+}
+
+export default connect(mapStateToProps)(Login);

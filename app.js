@@ -6,6 +6,7 @@ const MongoStore = require("connect-mongo")(session);
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const passport = require('passport');
 const port = 8000;
 
 mongoose.connect(
@@ -50,6 +51,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(cors());
+
+// import passport config
+require('./server/auth/passport')(passport);
 
 app.use("/api/v1", require("./server/routes/api/v1"));
 app.use(require("./server/routes/index"));
