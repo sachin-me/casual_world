@@ -66,12 +66,16 @@ nav.navbar {
   .hover {
     padding: 5px;
     border: 1px solid transparent;
+    a {
+      color: #4a4a4a;
+    }
     &:hover {
       background: rgba(9,30,66,.13);
       width: 50%;
       padding: 5px;
       border-radius: 4px;
       cursor: pointer;
+      color: #3273dc;
     }
   }
 }
@@ -99,4 +103,67 @@ nav.navbar {
 
 .create-team-span {
   margin-left: 5px;
+}
+
+// Create new project wrapper
+.create-new-wrapper {
+  .cp {
+    h4 {
+      text-align: center;
+		}
+		p {
+			margin: 0.5rem 0;
+		}
+		border-bottom: 1px solid #666a6dc7;
+  }
+	div {
+		margin: 0.5rem 0;
+	}
+  padding: 0.75rem;
+	// background: #4a4a4a;
+	background-color: #384047;
+  max-width: 600px;
+  width: 100%;
+  color: #fff;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	form {
+		input {
+			display: block;
+			margin: 0.5rem 0;
+			height: 2rem;
+			outline: none;
+			border: none;
+			background: transparent;
+			color: #fff;
+			font-size: 1rem;
+		}
+	}
+	.same-class {
+		padding: 0.5rem 0.9rem;
+		border: 1px solid #666a6dc7;
+		border-radius: 3px;
+		cursor: pointer;
+		.icon {
+			float: right;
+		}
+	}
+	.create-project-btn {
+		text-align: center;
+		margin: 1rem 0;
+		button {
+			background-color: #27a1e8;
+			color: #fff;
+			border: 1px solid #27a1e8;
+			height: 2.5rem;
+			width: 7rem;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+	}
 }

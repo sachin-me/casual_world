@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import UserBoard from './UserBoard';
 import HomeIcon from '../containers/HomeIcon';
+import CreateBoard from './CreateBoard';
 
 class UserOnBoard extends Component {
   render() {
@@ -11,7 +13,9 @@ class UserOnBoard extends Component {
             <UserBoard />
           </div>
           <div className='hover'>
-            <HomeIcon /><span className='home-span'>Home</span>
+            <Link to='/'>
+              <HomeIcon /><span className='home-span'>Home</span>
+            </Link>
           </div>
           <div className='create-team-wrapper'>
             <h4>Teams</h4>
@@ -31,7 +35,7 @@ class UserOnBoard extends Component {
         </div>
         <div className='column is-one-third board-link'>
           <h5>LINKS</h5>
-          <div className='hover'>+<span>Create a board</span></div>
+          <CreateBoard />
         </div>
       </div>
     );
