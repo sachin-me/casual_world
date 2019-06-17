@@ -33,10 +33,12 @@ class Login extends Component {
         this.setState({
           message: message
         })
+        this.props.history.push('/');
       } else {
         this.setState({
           error: error
         })
+        this.props.history.push('/dashboard');
       }
     }))
   }

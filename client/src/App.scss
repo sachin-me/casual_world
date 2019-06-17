@@ -18,3 +18,85 @@
     color: #555;
   }
 }
+
+// Dashboard
+.dashboard-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-board {
+  span {
+    margin-left: 5px;
+  }
+}
+
+// Navbar
+@media screen and (min-width: 1024px) {
+  .navbar {
+    min-height: 3.25rem;
+    width: 100%;
+  }
+}
+
+nav.navbar {
+  background-color: #27a1e8;
+}
+
+.column-wrapper {
+  margin-left: 2.5rem !important;
+  margin-right: -0.75rem !important;
+  margin-top: 3rem !important;
+}
+
+.column {
+  .image-info {
+    width: 360px;
+    max-width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    h4 {
+      margin-top: 0.75rem;
+      font-weight: 600;
+    }
+    p {
+      padding: 0.75rem 3px;
+    }
+  }
+  .hover {
+    padding: 5px;
+    border: 1px solid transparent;
+    &:hover {
+      background: rgba(9,30,66,.13);
+      width: 50%;
+      padding: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+}
+
+.board-link {
+  padding-left: 5rem !important;
+  div {
+    margin-top: 5px;
+    span {
+      margin-left: 5px;
+    }
+  }
+}
+
+.home-span {
+  margin-left: 2px;
+}
+
+.create-team-wrapper {
+  margin-top: 0.5rem;
+  h4 {
+    padding-left: 5px;
+  }
+}
+
+.create-team-span {
+  margin-left: 5px;
+}
