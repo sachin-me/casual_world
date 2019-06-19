@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ProjectForm from './ProjectForm';
 
 class CreateNewProject extends Component {
+	handleClick = () => {
+		console.log('called');
+	}
 	render() {
 		return (
 			<div className='create-new-wrapper'>
@@ -12,7 +15,7 @@ class CreateNewProject extends Component {
 				<div>
 					<ProjectForm />
 				</div>
-				<div className='same-class'>
+				<div className='same-class' onClick={this.handleClick}>
 					<span>Lists</span>
 					<span className='icon'><i className="far fa-arrow-alt-circle-right"></i></span>
 				</div>
