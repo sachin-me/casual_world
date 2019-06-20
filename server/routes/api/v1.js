@@ -11,4 +11,6 @@ router.post('/createboard', boardController.createBoard);
 
 // Creating new list
 router.post('/createlist', listController.createList)
+// Getting all lists
+router.get('/getlists', listController.getLists)
 module.exports = router;

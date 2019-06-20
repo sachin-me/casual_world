@@ -282,3 +282,40 @@ nav.navbar {
 		font-size: 1rem;
 	}
 }
+
+// create a list
+.add-list {
+	max-width: 150px;
+	width: 100%;
+	text-align: center;
+	padding: 1rem;
+	margin: 1rem 0.75rem;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+	span {
+		margin-left: 0.2rem;
+	}
+}
+.is-open {
+	max-width: 500px;
+	width: 100%;
+	text-align: center;
+	padding: 1rem;
+	margin: 1rem 0.75rem;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	position: relative;
+	.close-btn {
+		position: absolute;
+		top: 0;
+		right: 0.5rem;
+		font-size: 1rem;
+		color: #27a1e8;
+		cursor: pointer;
+	}
+}
+
+.create-list-wrapper {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 1rem;
+}

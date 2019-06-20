@@ -4,7 +4,8 @@ const initState = {
   currentUser: JSON.parse(localStorage.getItem('user')) || null,
 	currentToken: localStorage.getItem('token') || null,
 	board: JSON.parse(localStorage.getItem('Board')) || null,
-	list: {}
+	list: {},
+	allLists: []
 }
 
 function rootReducer (state = initState, action) {
@@ -62,6 +63,20 @@ function rootReducer (state = initState, action) {
 		}
 
 		case 'LIST_CREATE_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
+		case 'GET_LISTS_SUCCESS': {
+			return {
+				...state,
+				allLists: action.lists
+			}
+		}
+
+		case 'GET_LISTS_FAIL': {
 			return {
 				...state,
 				error: action.error

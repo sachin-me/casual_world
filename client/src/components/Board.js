@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CreateList from './CreateList';
+import Lists from './Lists';
 
 class Board extends Component {
 	state = {
@@ -28,18 +29,21 @@ class Board extends Component {
 						) : null
 					}
 				</div>
-				<div>
-					{
-						isOpen ? (
-							<>
-								<div><CreateList /></div><span onClick={this.handleClose}>x</span>
-							</>
-						) : (
-							<div onClick={this.handleClick}>
-								+ <span>Add a list</span>
-							</div>
-						)
-					}
+				<div className='create-list-wrapper'>
+					<Lists />
+					<div>
+						{
+							isOpen ? (
+								<div className='is-open'>
+									<div><CreateList /></div><span className='close-btn' onClick={this.handleClose}>x</span>
+								</div>
+							) : (
+								<div onClick={this.handleClick} className='add-list'>
+									+ <span>Add a list</span>
+								</div>
+							)
+						}
+					</div>
 				</div>
 			</>
 		);

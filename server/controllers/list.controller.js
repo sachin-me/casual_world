@@ -2,7 +2,6 @@ const List = require('../models/List');
 
 module.exports = {
 	createList: (req, res) => {
-		console.log(req.body, 'checking incoming data from client');
 		const { listName } = req.body;
 		const newList = new List({
 			listName
@@ -14,6 +13,17 @@ module.exports = {
 			return res.json({
 				message: 'list created, successfully',
 				list
+			})
+		})
+	},
+	getLists: (req, res) => {
+		List.find({}, (err, lists) => {
+			if (err) return res.json({
+				error: 'Could not get lists'
+			})
+			return res.json({
+				message: 'Getting lists',
+				lists
 			})
 		})
 	}

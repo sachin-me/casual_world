@@ -59,7 +59,6 @@ const actions = {
           })
           cb(false)
         }
-        console.log(data, 'logging user in')
       })
     }
 	},
@@ -89,7 +88,6 @@ const actions = {
 				})
 				cb(false)
 			}
-			console.log(data, 'coming data from server')
 		});
 	},
 
@@ -116,7 +114,29 @@ const actions = {
 				})
 				cb(false)
 			}
-			console.log(list, 'checking incoming list from server')
+		})
+	},
+
+	getLists: () => dispatch => {
+		fetch(`${uri}/getlists`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(lists => {
+			if (lists.message) {
+				dispatch({
+					type: 'GET_LISTS_SUCCESS',
+					lists: lists.lists
+				})
+			} else {
+				dispatch({
+					type: 'GET_LISTS_FAIL',
+					error: lists.error
+				})
+			}
 		})
 	}
 }
