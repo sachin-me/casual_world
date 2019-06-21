@@ -3,9 +3,9 @@ const initState = {
   error: '',
   currentUser: JSON.parse(localStorage.getItem('user')) || null,
 	currentToken: localStorage.getItem('token') || null,
-	board: JSON.parse(localStorage.getItem('Board')) || null,
 	list: {},
-	allLists: []
+	allLists: [],
+	boards: []
 }
 
 function rootReducer (state = initState, action) {
@@ -30,7 +30,7 @@ function rootReducer (state = initState, action) {
         currentUser: action.user,
         currentToken: action.token,
         message: action.message,
-        user: action.user
+        // user: action.user
       }
     }
 
@@ -44,11 +44,39 @@ function rootReducer (state = initState, action) {
 		case 'BOARD_CREATE_SUCCESS': {
 			return {
 				...state,
-				board: action.board
+				boards: action.boards
 			}
 		}
 
 		case 'BOARD_CREATE_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
+		case 'BOARDS_GET_SUCCESS': {
+			return {
+				...state,
+				boards: action.boards
+			}
+		}
+
+		case 'BOARDS_GET_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
+		case 'GET_SINGLE_BOARD_SUCCESS': {
+			return {
+				...state,
+				board: action.board
+			}
+		}
+
+		case 'GET_SINGLE_BOARD_FAIL': {
 			return {
 				...state,
 				error: action.error

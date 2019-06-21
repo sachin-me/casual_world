@@ -9,7 +9,7 @@ const BoardSchema = new Schema({
 		enum: ['OPEN', 'IN PROGRESS', 'IN REVIEW', 'CLOSED'],
 		default: 'OPEN'
 	},
-	list: [{type: Schema.Types.ObjectId, ref: 'List'}]
+	lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
 })
 
 const Board = mongoose.model('Board', BoardSchema);

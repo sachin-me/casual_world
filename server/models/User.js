@@ -7,7 +7,7 @@ const userSchema = new Schema({
   name: { type: String },
   email: { type: String },
 	password: { type: String },
-	board: [{type: Schema.Types.ObjectId, ref: 'Board'}]
+	boards: [{type: Schema.Types.ObjectId, ref: 'Board'}]
 })
 
 userSchema.pre('save', function(next) {

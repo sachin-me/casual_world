@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
-import Board from './Board';
-import Create from './Create';
 
 class CreateList extends Component {
 	state = {
-		listName: ''
+		listName: '',
+		boardId: this.props.board._id
 	}
 	handleChange = (e) => {
 		const { name, value } = e.target;
@@ -16,13 +15,13 @@ class CreateList extends Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
-		const { listName } = this.state;
+		const { listName, boardId } = this.state;
 		if (!listName) return
-		const data = { listName }
+		const data = { listName, boardId }
 		this.setState({
 			listName: ''
 		})
-		this.props.dispatch(actions.createList(data, success => {
+		this.props.dispatch(actions.createList(data, boardId, success => {
 			if (success) {
 				this.props.dispatch(actions.getLists())
 			}
@@ -41,4 +40,10 @@ class CreateList extends Component {
 	}
 }
 
-export default connect(null)(CreateList);
+const mapStateToProps = (state) => {
+	return {
+		board: state.board || {}
+	}
+}
+
+export default connect(mapStateToProps)(CreateList);

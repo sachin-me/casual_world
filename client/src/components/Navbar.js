@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import HomeIcon from '../containers/HomeIcon';
 import UserBoard from './UserBoard';
 import Create from './Create';
@@ -8,6 +9,8 @@ import Profile from './Profile';
 
 class Navbar extends Component {
 	render() {
+		const { currentUser } = this.props;
+		const userId = currentUser.id || ''
 		return (
 			<div>
 				<nav className="navbar" role="navigation" aria-label="main navigation">
@@ -16,9 +19,9 @@ class Navbar extends Component {
 								<Link to='/' className="navbar-item is-light">
 									<HomeIcon />
 								</Link>
-                <a className="navbar-item is-light">
+                <Link to={`/${userId}/getboards`} className="navbar-item is-light">
                   <UserBoard />
-                </a>
+                </Link>
               </div>
               <div className="navbar-end">
                 <a className="navbar-item is-light">
@@ -38,4 +41,10 @@ class Navbar extends Component {
 	}
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+	return {
+		currentUser: state.currentUser || {}
+	}
+}
+
+export default connect(mapStateToProps)(Navbar);

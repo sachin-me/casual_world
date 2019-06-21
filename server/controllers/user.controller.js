@@ -53,7 +53,8 @@ module.exports = {
         token,
         userInfo: {
           name,
-          email
+					email,
+					id
         }
       })
     })(req, res, next);

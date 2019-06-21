@@ -65,7 +65,8 @@ nav.navbar {
   }
   .hover {
     padding: 5px;
-    border: 1px solid transparent;
+		border: 1px solid transparent;
+		max-width: 200px;
     a {
       color: #4a4a4a;
     }
@@ -283,6 +284,16 @@ nav.navbar {
 	}
 }
 
+.board-card {
+	max-width: 150px;
+	width: 100%;
+	text-align: center;
+	padding: 1rem;
+	margin: 1rem 0.75rem;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+}
+
 // create a list
 .add-list {
 	max-width: 150px;
@@ -318,4 +329,54 @@ nav.navbar {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-gap: 1rem;
+}
+
+.list-card {
+	max-width: 400px;
+}
+
+// Create a Card
+.create-card {
+	position: relative;
+	form {
+		display: grid;
+		justify-content: center;
+		grid-gap: 0.5rem;
+		input[type="text"] {
+			outline: none;
+			display: block;
+			height: 2rem;
+		}
+		input[type="submit"] {
+			background: #27a1e8;
+			border: 1px solid #27a1e8;
+			cursor: pointer;
+			color: #fff;
+			padding: 0.5rem;
+			border-radius: 2px;
+			font-size: 1rem;
+		}
+	}
+	.close-btn {
+		position: absolute;
+		top: 0;
+		right: 0.5rem;
+		font-size: 1rem;
+		color: #27a1e8;
+		cursor: pointer;
+	}
+}
+
+// user profile dropdown
+
+.userprofile-dropdown {
+	box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+	position: absolute;
+	background-color: #fff;
+	top: 60px;
+	right: 0px;
+	width: 304px;
+	max-height: 175px;
+	text-align: center;
+	padding: 1rem 0;
 }
