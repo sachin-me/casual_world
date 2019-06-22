@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CreateList from './CreateList';
 import Lists from './Lists';
+import actions from '../store/actions';
 
 class Board extends Component {
 	state = {
@@ -17,6 +18,13 @@ class Board extends Component {
 			isOpen: false
 		})
 	}
+	componentDidMount = () => {
+		const { currentUser, match } = this.props;
+		const userId = currentUser.id;
+		const boardId = match.params.boardid;
+		this.props.dispatch(actions.getSingleBoard(userId, boardId));
+		this.props.dispatch(actions.getLists(boardId));
+	}
 	render() {
 		const { board } = this.props;
 		const { isOpen } = this.state;
@@ -30,7 +38,7 @@ class Board extends Component {
 					}
 				</div>
 				<div className='create-list-wrapper'>
-					<Lists />
+					<Lists boardId={board._id} />
 					<div>
 						{
 							isOpen ? (
@@ -52,7 +60,8 @@ class Board extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		board: state.board
+		board: state.board,
+		currentUser: state.currentUser
 	}
 }
 

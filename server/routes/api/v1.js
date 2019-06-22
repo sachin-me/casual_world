@@ -18,7 +18,7 @@ router.get('/:userid/board/:boardid', boardController.getSingleBoard);
 router.post('/board/:id/createlist', listController.createList)
 
 // Getting all lists
-router.get('/getlists', listController.getLists)
+router.get('/board/:id/getlists', listController.getLists)
 
 // Creating new card
 router.post('/board/:id/list/:id/createcard', cardController.createCard)

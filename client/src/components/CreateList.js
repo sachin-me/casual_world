@@ -23,7 +23,7 @@ class CreateList extends Component {
 		})
 		this.props.dispatch(actions.createList(data, boardId, success => {
 			if (success) {
-				this.props.dispatch(actions.getLists())
+				this.props.dispatch(actions.getLists(boardId))
 			}
 		}))
 	}

@@ -73,7 +73,6 @@ const actions = {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data, 'checking data after create board')
 			if (data.message) {
 				const { createdBoard } = data;
 				dispatch({
@@ -101,7 +100,6 @@ const actions = {
 		})
 		.then(res => res.json())
 		.then(boards => {
-			console.log(boards, 'getting boards from server');
 			if (boards.message) {
 				dispatch({
 					type: 'BOARDS_GET_SUCCESS',
@@ -129,7 +127,7 @@ const actions = {
 			if (board.message) {
 				dispatch({
 					type: 'GET_SINGLE_BOARD_SUCCESS',
-					board: board.board
+					singleBoard: board.board
 				})
 			} else {
 				dispatch({
@@ -166,8 +164,8 @@ const actions = {
 		})
 	},
 
-	getLists: () => dispatch => {
-		fetch(`${uri}/getlists`, {
+	getLists: (boardId) => dispatch => {
+		fetch(`${uri}/board/${boardId}/getlists`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

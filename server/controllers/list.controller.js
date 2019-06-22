@@ -28,7 +28,8 @@ module.exports = {
 		})
 	},
 	getLists: (req, res) => {
-		List.find({}, (err, lists) => {
+		let boardId = req.params.id;
+		Board.findById(boardId).populate('lists').exec((err, lists) => {
 			if (err) return res.json({
 				error: 'Could not get lists'
 			})

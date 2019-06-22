@@ -47,13 +47,15 @@ module.exports = {
 	getSingleBoard: (req, res) => {
 		let boardId = req.params.boardid;
 		let userId = req.params.userid;
-		Board.findById(boardId).populate('lists').exec((err, board) => {
-			if (err) return res.json({
-				error: 'Could not get board'
-			})
-			return res.json({
-				message: 'Getting board, successfully',
-				board
+		User.findById(userId, (err, user) => {
+			Board.findById(boardId).populate('lists').exec((err, board) => {
+				if (err) return res.json({
+					error: 'Could not get board'
+				})
+				return res.json({
+					message: 'Getting board, successfully',
+					board
+				})
 			})
 		})
 	}

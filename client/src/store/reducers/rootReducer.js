@@ -5,6 +5,7 @@ const initState = {
 	currentToken: localStorage.getItem('token') || null,
 	list: {},
 	allLists: [],
+	board: {},
 	boards: []
 }
 
@@ -72,7 +73,7 @@ function rootReducer (state = initState, action) {
 		case 'GET_SINGLE_BOARD_SUCCESS': {
 			return {
 				...state,
-				board: action.board
+				board: action.singleBoard
 			}
 		}
 
@@ -98,9 +99,10 @@ function rootReducer (state = initState, action) {
 		}
 
 		case 'GET_LISTS_SUCCESS': {
+			const { lists } = action.lists
 			return {
 				...state,
-				allLists: action.lists
+				allLists: lists
 			}
 		}
 

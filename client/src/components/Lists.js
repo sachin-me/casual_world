@@ -5,7 +5,8 @@ import CreateCard from './CreateCard';
 
 class Lists extends Component {
 	state = {
-		openInputBox: []
+		openInputBox: [],
+		boardId: this.props.boardId
 	}
 
 	handleClick = (id) => {
@@ -25,15 +26,16 @@ class Lists extends Component {
 		})
 	}
 	componentDidMount = () => {
-		this.props.dispatch(actions.getLists());
+		const { boardId } = this.state;
+		this.props.dispatch(actions.getLists(boardId));
 	}
 	render() {
-		const { lists } = this.props;
+		const { allLists } = this.props;
 		const { openInputBox } = this.state;
 		return (
 			<>
 				{
-					lists && lists.map((list) => {
+					allLists && allLists.map((list) => {
 						return (
 							<div key={list._id} className='add-list list-card'>
 								<div>{list.listName}</div>
@@ -61,7 +63,8 @@ class Lists extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		lists: state.allLists
+		allLists: state.allLists,
+		board: state.board || {}
 	}
 }
 
