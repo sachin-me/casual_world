@@ -19,6 +19,21 @@
   }
 }
 
+// Header
+.user-entry {
+	.login-btn, .signup-btn {
+		position: absolute;
+		top: 3%;
+		z-index: 999;
+	}
+	.login-btn {
+		right: 16%;
+	}
+	.signup-btn {
+    right: 8%;
+	}
+}
+
 // Dashboard
 .dashboard-wrapper {
   display: flex;
@@ -379,4 +394,19 @@ nav.navbar {
 	max-height: 175px;
 	text-align: center;
 	padding: 1rem 0;
+	.logout-btn {
+		border: 1px solid #27a1e8;
+		padding: 0.5rem 0;
+		button {
+			background: transparent;
+			border: none;
+			outline: none;
+		}
+		&:hover {
+			background: #27a1e8;
+			button {
+				color: #fff;
+			}
+		}
+	}
 }

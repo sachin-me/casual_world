@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
 import CreateCard from './CreateCard';
+import Cards from './Cards';
 
 class Lists extends Component {
 	state = {
@@ -28,10 +29,12 @@ class Lists extends Component {
 	componentDidMount = () => {
 		const { boardId } = this.state;
 		this.props.dispatch(actions.getLists(boardId));
+		this.props.dispatch(actions.getCards(boardId, ))
 	}
 	render() {
-		const { allLists } = this.props;
+		const { allLists, cards } = this.props;
 		const { openInputBox } = this.state;
+		console.log(cards, 'checking cards in lists.js');
 		return (
 			<>
 				{
@@ -52,6 +55,13 @@ class Lists extends Component {
 										)
 									}
 								</div>
+								<div>
+									{
+										cards._id === list._id ? (
+											<Cards listId={list._id} />
+										) : ''
+									}
+								</div>
 							</div>
 						)
 					})
@@ -64,7 +74,8 @@ class Lists extends Component {
 const mapStateToProps = (state) => {
 	return {
 		allLists: state.allLists,
-		board: state.board || {}
+		board: state.board || {},
+		cards: state.cards || {}
 	}
 }
 

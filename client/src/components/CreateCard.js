@@ -6,6 +6,8 @@ class CreateCard extends Component {
 	state = {
 		cardName: '',
 		userId: this.props.currentUser.id,
+		boardId: this.props.board._id,
+		listId: this.props.listId
 	}
 	handleChange = (e) => {
 		const { name, value } = e.target;
@@ -15,9 +17,17 @@ class CreateCard extends Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
-		const { cardName } = this.state;
+		const { cardName, boardId, listId } = this.state;
+		if (!cardName) return
 		const data = { cardName }
-		this.props.dispatch(actions.createCard(data))
+		this.setState({
+			cardName: ''
+		})
+		this.props.dispatch(actions.createCard(data, boardId, listId, success => {
+			if (success) {
+				this.props.dispatch(actions.getCards(listId))
+			}
+		}))
 	}
 	render() {
 		const { cardName } = this.state;

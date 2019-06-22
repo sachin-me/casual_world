@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 class Header extends Component {
   render() {
     return (
-      <div>
-        <Link to='/login'>
+      <div className='user-entry'>
+        <Link to='/login' className='login-btn'>
           <button className='button is-link'>Log in</button>
         </Link>
-        <Link to='/signup'>
+        <Link to='/signup' className='signup-btn'>
           <button className='button is-link'>Sign up</button>
         </Link>
       </div>

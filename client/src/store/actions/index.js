@@ -62,6 +62,17 @@ const actions = {
       })
     }
 	},
+
+	// logout user action
+	logout: (cb) => dispatch => {
+		localStorage.removeItem('Board');
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		dispatch({
+			type: 'LOGOUT_USER'
+		})
+		cb(true)
+	},
 	
 	createBoard: (data, userId, cb) => dispatch => {
 		fetch(`${uri}/${userId}/createboard`, {
@@ -188,8 +199,8 @@ const actions = {
 	},
 
 	// Creating new card
-	createCard: (data) => dispatch => {
-		fetch(`${uri}/board/:id/list/:id/createcard`, {
+	createCard: (data, boardId, listId, cb) => dispatch => {
+		fetch(`${uri}/board/${boardId}/list/${listId}/createcard`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -197,7 +208,47 @@ const actions = {
 			body: JSON.stringify(data)
 		})
 		.then(res => res.json())
-		.then(card => console.log(card, 'getting card from db'))
+		.then(card => {
+			if (card.message) {
+				console.log(card, 'getting card from db')
+				dispatch({
+					type: 'CREATE_CARD_SUCCESS',
+					card
+				})
+				cb(true)
+			} else {
+				dispatch({
+					type: 'CREATE_CARD_FAIL',
+					error: card.error
+				})
+				cb(false)
+			}
+		})
+	},
+
+	// Getting list of all cards from server
+	getCards: (listId) => dispatch => {
+		fetch(`${uri}/list/${listId}/getcards`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(cards => {
+			console.log(cards, 'getting list of all cards')
+			if (cards.message) {
+				dispatch({
+					type: 'GET_CARDS_SUCCESS',
+					cards: cards.cards
+				})
+			} else {
+				dispatch({
+					type: 'GET_CARDS_FAIL',
+					error: cards.error
+				})
+			}
+		})
 	}
 }
 
