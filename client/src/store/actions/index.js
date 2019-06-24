@@ -226,7 +226,7 @@ const actions = {
 		})
 	},
 
-	// Getting list of all cards from server
+	// Getting list of all cards which belongs to a particular list
 	getCards: (listId) => dispatch => {
 		fetch(`${uri}/list/${listId}/getcards`, {
 			method: 'GET',
@@ -236,7 +236,6 @@ const actions = {
 		})
 		.then(res => res.json())
 		.then(cards => {
-			console.log(cards, 'getting list of all cards')
 			if (cards.message) {
 				dispatch({
 					type: 'GET_CARDS_SUCCESS',
@@ -246,6 +245,30 @@ const actions = {
 				dispatch({
 					type: 'GET_CARDS_FAIL',
 					error: cards.error
+				})
+			}
+		})
+	},
+
+	// Getting all lists after populating cards
+	getAllCards: (id) => dispatch => {
+		fetch(`${uri}/board/${id}/list/getallcards`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(lists => {
+			if (lists.message) {
+				dispatch({
+					type: 'GET_ALL_CARDS_SUCCESS',
+					lists: lists.lists
+				})
+			} else {
+				dispatch({
+					type: 'GET_ALL_CARDS_FAIL',
+					error: lists.error
 				})
 			}
 		})

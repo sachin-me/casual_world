@@ -24,6 +24,7 @@ class Board extends Component {
 		const boardId = match.params.boardid;
 		this.props.dispatch(actions.getSingleBoard(userId, boardId));
 		this.props.dispatch(actions.getLists(boardId));
+		this.props.dispatch(actions.getAllCards(boardId));
 	}
 	render() {
 		const { board } = this.props;

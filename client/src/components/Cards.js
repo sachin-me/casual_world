@@ -9,7 +9,8 @@ class Cards extends Component {
 	componentDidMount = () => {
 		const { boardId } = this.state;
 		const { listId } = this.props;
-		this.props.dispatch(actions.getCards(listId))
+		this.props.dispatch(actions.getCards(listId));
+		this.props.dispatch(actions.getAllCards(boardId));
 	}
 	render() {
 		const { cards } = this.props;
@@ -18,7 +19,7 @@ class Cards extends Component {
 				{
 					cards && cards.map((card) => {
 						return (
-							<div key={card._id}>
+							<div key={card._id} className='subtask-card'>
 								<div>{card.cardName}</div>
 							</div>
 						)
@@ -31,7 +32,7 @@ class Cards extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		cards: state.cards.cards || [],
+		// cards: state.cards.cards || [],
 		board: state.board || {}
 	}
 }

@@ -18,7 +18,6 @@ module.exports = {
 					cards: card._id
 				}
 			}, { new: true }, (err, createdCard) => {
-				console.log(createdCard, 'creating new card');
 				if (err) return res.json({
 					error: 'Could not update list'
 				})
@@ -30,7 +29,7 @@ module.exports = {
 		})
 	},
 
-	// Getting list of all cards
+	// Getting list of all cards which belongs to a particular list
 	getCards: (req, res) => {
 		const listId = req.params.listid;
 		List.findById(listId).populate('cards').exec((err, cards) => {
@@ -40,6 +39,25 @@ module.exports = {
 			return res.json({
 				message: 'Getting cards, successfully',
 				cards
+			})
+		})
+	},
+
+	// Getting all lists after populating cards
+	getAllCards: (req, res) => {
+		let boardId = req.params.id;
+		Board.findById(boardId, (err, board) => {
+			if (err) return res.json({
+				error: 'Could not get board'
+			})
+			List.find({}).populate('cards').exec((err, lists) => {
+				if (err) return res.json({
+					error: 'Could not get lists'
+				})
+				return res.json({
+					message: 'Getting lists, successfully',
+					lists
+				})
 			})
 		})
 	}

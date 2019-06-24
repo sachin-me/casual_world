@@ -28,4 +28,7 @@ router.post('/board/:boardid/list/:listid/createcard', cardController.createCard
 // Getting all cards which belongs to a particular list
 router.get('/list/:listid/getcards', cardController.getCards);
 
+// Getting all lists after populating cards
+router.get('/board/:id/list/getallcards', cardController.getAllCards);
+
 module.exports = router;

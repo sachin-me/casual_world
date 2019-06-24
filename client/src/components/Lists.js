@@ -29,16 +29,18 @@ class Lists extends Component {
 	componentDidMount = () => {
 		const { boardId } = this.state;
 		this.props.dispatch(actions.getLists(boardId));
-		this.props.dispatch(actions.getCards(boardId, ))
+		this.props.dispatch(actions.getAllCards(boardId));
 	}
 	render() {
-		const { allLists, cards } = this.props;
+		const { getAllCards, allLists } = this.props;
 		const { openInputBox } = this.state;
-		console.log(cards, 'checking cards in lists.js');
+		
+		let filterCard = getAllCards.filter(list1 => allLists.some(list2 => list1._id === list2._id));
+		
 		return (
 			<>
 				{
-					allLists && allLists.map((list) => {
+					filterCard && filterCard.map((list) => {
 						return (
 							<div key={list._id} className='add-list list-card'>
 								<div>{list.listName}</div>
@@ -56,11 +58,7 @@ class Lists extends Component {
 									}
 								</div>
 								<div>
-									{
-										cards._id === list._id ? (
-											<Cards listId={list._id} />
-										) : ''
-									}
+									<Cards cards={list.cards} listId={list._id} />
 								</div>
 							</div>
 						)
@@ -73,9 +71,9 @@ class Lists extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		allLists: state.allLists,
 		board: state.board || {},
-		cards: state.cards || {}
+		getAllCards: state.getAllCards || [],
+		allLists: state.allLists || []
 	}
 }
 
