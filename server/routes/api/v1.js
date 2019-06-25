@@ -16,6 +16,9 @@ router.get('/:id/getboards', boardController.getBoards);
 // Getting single board
 router.get('/:userid/board/:boardid', boardController.getSingleBoard);
 
+// Deleting a particular board
+router.delete('/:userid/board/:boardid/delete', boardController.deleteBoard); 
+
 // Creating new list
 router.post('/board/:id/createlist', listController.createList)
 

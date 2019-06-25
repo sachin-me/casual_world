@@ -86,6 +86,20 @@ function rootReducer (state = initState, action) {
 			}
 		}
 
+		case 'DELETE_BOARD_SUCCESS': {
+			return {
+				...state,
+				boards: action.boards
+			}
+		}
+
+		case 'DELETE_BOARD_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
 		case 'LIST_CREATE_SUCCESS' : {
 			return {
 				...state,

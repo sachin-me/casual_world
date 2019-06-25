@@ -9,6 +9,13 @@ class BoardLists extends Component {
 		this.props.dispatch(actions.getSingleBoard(userId, boardId))
 		this.props.history.push(`/${userId}/board/${boardId}`)
 	}
+
+	handleDelete = (boardId) => {
+		const { id } = this.props.currentUser;
+		const userId = id;
+		this.props.dispatch(actions.deleteBoard(userId, boardId));
+	}
+
 	componentDidMount = () => {
 		const { id } = this.props.currentUser;
 		this.props.dispatch(actions.getBoards(id));
@@ -18,11 +25,16 @@ class BoardLists extends Component {
 		return (
 			<div>
 				{
-					boards && boards.map((board) => {
+					boards ? boards.map((board) => {
 						return (
-							<div key={board._id} className='board-card' onClick={() => this.handleClick(board._id)}>{board.boardName}</div>
+							<div key={board._id} className='board-card'>
+								<span onClick={() => this.handleClick(board._id)}>{board.boardName}</span>
+								<span className='trash-icon' onClick={() => this.handleDelete(board._id)} >
+									<i className="fas fa-trash-alt"></i>
+								</span>
+							</div>
 						)
-					})
+					}) : <div>Oops, no board found!</div>
 				}
 			</div>
 		);

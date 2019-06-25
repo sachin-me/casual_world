@@ -149,6 +149,30 @@ const actions = {
 		})
 	},
 
+	// Deleting a particular board
+	deleteBoard: (userId, boardId) => dispatch => {
+		fetch(`${uri}/${userId}/board/${boardId}/delete`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(board => {
+			if (board.message) {
+				dispatch({
+					type: 'DELETE_BOARD_SUCCESS',
+					boards: board.updatedBoard
+				})
+			} else {
+				dispatch({
+					type: 'DELETE_BOARD_FAIL',
+					error: board.error
+				})
+			}
+		})
+	},
+
 	createList: (data, id, cb) => dispatch => {
 		fetch(`${uri}/board/${id}/createlist`, {
 			method: 'POST',

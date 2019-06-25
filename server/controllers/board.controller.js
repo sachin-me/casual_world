@@ -58,5 +58,29 @@ module.exports = {
 				})
 			})
 		})
+	},
+
+	// Deleting a particular board
+	deleteBoard: (req, res) => {
+		let boardId = req.params.boardid;
+		let userId = req.params.userid;
+		Board.findOneAndDelete(boardId, (err, board) => {
+			if (err) return res.json({
+				error: 'Could not delete board'
+			})
+			User.findOneAndUpdate(userId, {
+				$pull: {
+					boards: board._id
+				}
+			}, { new: true }).populate('boards').exec((err, updatedBoard) => {
+				if (err) return res.json({
+					error: 'Could not update user'
+				})	
+				return res.json({
+					message: 'Board deleted, successfully',
+					updatedBoard: updatedBoard.boards
+				})
+			})
+		})
 	}
 }
