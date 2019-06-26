@@ -82,5 +82,27 @@ module.exports = {
 				})
 			})
 		})
+	},
+
+	// Updating a particular board
+	updateBoard: (req, res) => {
+		let boardId = req.params.boardid;
+		const { boardName } = req.body;
+		Board.findOneAndUpdate(boardId, {
+			boardName
+		}, { new: true }, (err, board) => {
+			if (err) return res.json({
+				error: 'Failed to update Board'
+			})
+			Board.find({}, (err, boards) => {
+				if (err) return res.json({
+					error: 'Failed to find Board'
+				})
+				return res.json({
+					message: 'Board updated',
+					boards
+				})
+			})
+		})
 	}
 }

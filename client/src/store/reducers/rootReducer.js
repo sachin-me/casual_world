@@ -100,6 +100,20 @@ function rootReducer (state = initState, action) {
 			}
 		}
 
+		case 'BOARD_UPDATE_SUCCESS': {
+			return {
+				...state,
+				boards: action.boards
+			}
+		}
+
+		case 'BOARD_UPDATE_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
 		case 'LIST_CREATE_SUCCESS' : {
 			return {
 				...state,

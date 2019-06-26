@@ -300,16 +300,35 @@ nav.navbar {
 }
 
 .board-card {
-	max-width: 150px;
+	max-width: 200px;
 	width: 100%;
 	text-align: center;
 	padding: 1rem;
 	margin: 1rem 0.75rem;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	cursor: pointer;
-	.trash-icon {
+	.trash-icon, .edit-icon {
 		margin-left: 1rem;
 		color: #27a1e8;
+	}
+	form {
+		position: relative;
+    padding: 0 1rem;
+		input[type="text"] {
+			padding: 0.5rem;
+			display: inline-block;
+			width: 100%;
+	    outline: none;
+	    font-size: 1rem;
+	    border: 1px solid rgba(9,30,66,.13);
+	    border-radius: 2px;
+		}
+		span {
+			color: #27a1e8;
+			position: absolute;
+      margin: 0 0.5rem;
+      font-size: 1.5rem;
+		}
 	}
 }
 

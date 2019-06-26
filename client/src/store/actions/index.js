@@ -173,6 +173,33 @@ const actions = {
 		})
 	},
 
+	// updating a particular board
+	updateBoard: (userId, boardId, data, cb) => dispatch => {
+		fetch(`${uri}/${userId}/board/${boardId}/update`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			}, 
+			body: JSON.stringify(data)
+		})
+		.then(res => res.json())
+		.then(boards => {
+			if (boards.message) {
+				dispatch({
+					type: 'BOARD_UPDATE_SUCCESS',
+					boards: boards.boards
+				})
+				cb(true)
+			} else {
+				dispatch({
+					type: 'BOARD_UPDATE_FAIL',
+					error: boards.error
+				})
+				cb(false)
+			}
+		})
+	},
+ 
 	createList: (data, id, cb) => dispatch => {
 		fetch(`${uri}/board/${id}/createlist`, {
 			method: 'POST',
