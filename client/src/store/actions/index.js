@@ -249,6 +249,57 @@ const actions = {
 		})
 	},
 
+	// Updating a particular list
+	updateList: (boardId, listId, data, cb) => dispatch => {
+		fetch(`${uri}/board/${boardId}/list/${listId}/update`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		.then(res => res.json())
+		.then(lists => {
+			if (lists.message) {
+				dispatch({
+					type: 'LIST_UPDATE_SUCCESS',
+					lists: lists.lists
+				})
+				cb(true)
+			} else {
+				dispatch({
+					type: 'LIST_UPDATE_FAIL',
+					error: lists.error
+				})
+				cb(false)
+			}
+		})
+	},
+
+	// deleting a particular list
+	deleteList: (boardId, listId) => dispatch => {
+		fetch(`${uri}/board/${boardId}/list/${listId}/delete`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(lists => {
+			if (lists.message) {
+				dispatch({
+					type: 'DELETE_LIST_SUCCESS',
+					lists: lists.updatedList
+				})
+			} else {
+				dispatch({
+					type: 'DELETE_LIST_FAIL',
+					error: lists.error
+				})
+			}
+		})
+	},
+
 	// Creating new card
 	createCard: (data, boardId, listId, cb) => dispatch => {
 		fetch(`${uri}/board/${boardId}/list/${listId}/createcard`, {

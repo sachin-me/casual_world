@@ -371,6 +371,10 @@ nav.navbar {
 
 .list-card {
 	max-width: 400px;
+	.trash-icon, .edit-icon {
+		margin-left: 1rem;
+		color: #27a1e8;
+	}
 }
 
 // Create a Card

@@ -28,6 +28,12 @@ router.post('/board/:id/createlist', listController.createList)
 // Getting all lists
 router.get('/board/:id/getlists', listController.getLists)
 
+// Updating a particular list
+router.put('/board/:boardid/list/:listid/update', listController.updateList);
+
+// Deleting a particular list
+router.delete('/board/:boardid/list/:listid/delete', listController.deleteList)
+
 // Creating new card
 router.post('/board/:boardid/list/:listid/createcard', cardController.createCard)
 

@@ -68,7 +68,7 @@ module.exports = {
 			if (err) return res.json({
 				error: 'Could not delete board'
 			})
-			User.findOneAndUpdate(userId, {
+			User.findOneAndUpdate({ _id: userId }, {
 				$pull: {
 					boards: board._id
 				}
@@ -88,7 +88,7 @@ module.exports = {
 	updateBoard: (req, res) => {
 		let boardId = req.params.boardid;
 		const { boardName } = req.body;
-		Board.findOneAndUpdate(boardId, {
+		Board.findOneAndUpdate({ _id: boardId}, {
 			boardName
 		}, { new: true }, (err, board) => {
 			if (err) return res.json({

@@ -38,5 +38,53 @@ module.exports = {
 				lists
 			})
 		})
+	},
+
+	// Updating a particular list
+	updateList: (req, res) => {
+		let boardId = req.params.boardid;
+		let listId = req.params.listid;
+		const { listName } = req.body;
+		List.findOneAndUpdate({ _id: listId}, {
+			listName
+		}, { new: true }, (err, list) => {
+			if (err) return res.json({
+				error: 'Failed to update list'
+			})
+			List.find({}, (err, lists) => {
+				if (err) return res.json({
+					error: 'Could not find lists'
+				})
+				return res.json({
+					message: 'List updated',
+					lists
+				})
+			})
+		})
+	},
+
+	// Deleting a particular list
+	deleteList: (req, res) => {
+		let boardId = req.params.boardid;
+		let listid = req.params.listid;
+		console.log(boardId, 'checking board Id')
+		List.findByIdAndDelete(listid, (err, list) => {
+			if (err) return res.json({
+				error: 'Could not delete list'
+			})
+			Board.findByIdAndUpdate(boardId, {
+				$pull: {
+					lists: list._id
+				}
+			}, { new: true }).populate('lists').exec((err, updatedList) => {
+				if (err) return res.json({
+					error: 'Could not update board'
+				})
+				return res.json({
+					message: 'List deleted, successfully',
+					updatedList: updatedList.lists
+				})
+			})
+		})
 	}
 }

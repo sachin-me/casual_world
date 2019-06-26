@@ -6,7 +6,10 @@ import Cards from './Cards';
 
 class Lists extends Component {
 	state = {
+		isOpen: false,
+		listName: '',
 		openInputBox: [],
+		openListBox: [],
 		boardId: this.props.boardId
 	}
 
@@ -26,6 +29,50 @@ class Lists extends Component {
 			openInputBox: removeId
 		})
 	}
+
+	handleListClose = (id) => {
+		const { openListBox } = this.state;
+		let removeListId = openListBox.filter(val => val != id);
+		this.setState({
+			openListBox: removeListId
+		})
+	}
+
+	handleUpdate = (listId) => {
+		const { openListBox } = this.state;
+		let checkId = [...openListBox, listId];
+		let lastListArr = checkId.filter((val, index, arr) => arr.indexOf(val) === index);
+		this.setState({
+			isOpen: true,
+			openListBox: lastListArr
+		})
+	}	
+
+	handleChange = (e) => {
+		const { name, value } = e.target;
+		this.setState({
+			[name]: value
+		})
+	}
+
+	handleSubmit = (e, listId) => {
+		e.preventDefault();
+		const { boardId, listName } = this.state;
+		const data = { listName };
+		this.props.dispatch(actions.updateList(boardId, listId, data, success => {
+			if (success) {
+				this.setState({
+					isOpen: false
+				})
+			}
+		}))
+	}
+
+	handleDelete = (listId) => {
+		const { boardId } = this.props;
+		this.props.dispatch(actions.deleteList(boardId, listId))
+	}
+
 	componentDidMount = () => {
 		const { boardId } = this.state;
 		this.props.dispatch(actions.getLists(boardId));
@@ -33,17 +80,38 @@ class Lists extends Component {
 	}
 	render() {
 		const { getAllCards, allLists } = this.props;
-		const { openInputBox } = this.state;
+		const { openInputBox, isOpen, openListBox, listName } = this.state;
 		
 		let filterCard = getAllCards.filter(list1 => allLists.some(list2 => list1._id === list2._id));
-		
 		return (
 			<>
 				{
 					filterCard && filterCard.map((list) => {
 						return (
 							<div key={list._id} className='add-list list-card'>
-								<div>{list.listName}</div>
+								{
+									isOpen && openListBox && openListBox.includes(list._id) ? (
+										<>
+											<form action="" onSubmit={(e) => this.handleSubmit(e, list._id)} >
+												<input name='listName' type="text" placeholder={list.listName} value={listName} onChange={this.handleChange} />
+												<span onClick={() => this.handleListClose(list._id)}>x</span>
+											</form>
+										</>
+									) : (
+										<>
+											<span>{list.listName}</span>
+											<span className='edit-icon' onClick={() => this.handleUpdate(list._id)}>
+												<i className="fas fa-pencil-alt"></i>
+											</span>
+											<span className='trash-icon' onClick={() => this.handleDelete(list._id)} >
+												<i className="fas fa-trash-alt"></i>
+											</span>
+										</>
+									)
+								}
+								<div>
+									<Cards cards={list.cards} listId={list._id} />
+								</div>
 								<div>
 									{
 										(openInputBox && openInputBox.includes(list._id)) ? (
@@ -56,9 +124,6 @@ class Lists extends Component {
 											</div>
 										)
 									}
-								</div>
-								<div>
-									<Cards cards={list.cards} listId={list._id} />
 								</div>
 							</div>
 						)

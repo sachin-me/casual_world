@@ -143,6 +143,35 @@ function rootReducer (state = initState, action) {
 			}
 		}
 
+		case 'LIST_UPDATE_SUCCESS': {
+			return {
+				...state,
+				allLists: action.lists,
+				getAllCards: action.lists
+			}
+		}
+
+		case 'LIST_UPDATE_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
+		case 'DELETE_LIST_SUCCESS': {
+			return {
+				...state,
+				allLists: action.lists
+			}
+		}
+
+		case 'DELETE_LIST_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
 		case 'GET_CARDS_SUCCESS': {
 			return {
 				...state,
