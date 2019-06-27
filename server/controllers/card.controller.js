@@ -60,5 +60,40 @@ module.exports = {
 				})
 			})
 		})
+	},
+
+	// Deleting a particular card
+	deleteCard: (req, res) => {
+		let listId = req.params.listid;
+		let cardId = req.params.cardid;
+		Card.findByIdAndDelete(cardId, (err, card) => {
+			if (err) {
+				return res.json({
+					error: 'Could not delete card'
+				})
+			}
+			List.findByIdAndUpdate(listId, {
+				$pull: {
+					cards: card._id
+				}
+			}, { upsert: true }, (err, list) => {
+				if (err) {
+					return res.json({
+						error: 'Could not update list'
+					})
+				}
+				List.find({}).populate('cards').exec((err, cards) => {
+					if (err) {
+						return res.json({
+							error: 'Failed to update list afer deleting card'
+						})
+					}
+					return res.json({
+						message: 'Card deleted, successfully',
+						cards
+					})
+				})
+			})
+		})
 	}
 }

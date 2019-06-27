@@ -175,7 +175,8 @@ function rootReducer (state = initState, action) {
 		case 'GET_CARDS_SUCCESS': {
 			return {
 				...state,
-				cards: action.cards
+				cards: action.cards,
+				allCards: action.cards.cards
 			}
 		}
 
@@ -194,6 +195,21 @@ function rootReducer (state = initState, action) {
 		}
 
 		case 'GET_ALL_CARDS_FAIL': {
+			return {
+				...state,
+				error: action.error
+			}
+		}
+
+		case 'DELETE_CARD_SUCCESS': {
+			return {
+				...state,
+				getAllCards: action.cards.cards,
+				allCards: action.cards.cards
+			}
+		}
+
+		case 'DELETE_CARD_FAIL': {
 			return {
 				...state,
 				error: action.error

@@ -312,7 +312,6 @@ const actions = {
 		.then(res => res.json())
 		.then(card => {
 			if (card.message) {
-				console.log(card, 'getting card from db')
 				dispatch({
 					type: 'CREATE_CARD_SUCCESS',
 					card
@@ -371,6 +370,30 @@ const actions = {
 				dispatch({
 					type: 'GET_ALL_CARDS_FAIL',
 					error: lists.error
+				})
+			}
+		})
+	}, 
+
+	// deleting a particular card
+	deleteCard: (listId, cardId) => dispatch => {
+		fetch(`${uri}/list/${listId}/card/${cardId}/delete`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(cards => {
+			if (cards.message) {
+				dispatch({
+					type: 'DELETE_CARD_SUCCESS',
+					cards
+				})
+			} else {
+				dispatch({
+					type: 'DELETE_CARD_FAIL',
+					error: cards.error
 				})
 			}
 		})

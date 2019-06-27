@@ -3,15 +3,24 @@ import { connect } from 'react-redux';
 import actions from '../store/actions';
 
 class Cards extends Component {
+
 	state = {
-		boardId: this.props.boardId
+		boardId: this.props.boardId,
+		listId: this.props.listId
 	}
+
+	handleDelete = (cardId) => {
+		const { listId } = this.props;
+		this.props.dispatch(actions.deleteCard(listId, cardId))
+	}
+
 	componentDidMount = () => {
 		const { boardId } = this.state;
 		const { listId } = this.props;
 		this.props.dispatch(actions.getCards(listId));
 		this.props.dispatch(actions.getAllCards(boardId));
 	}
+
 	render() {
 		const { cards } = this.props;
 		return (
@@ -20,7 +29,13 @@ class Cards extends Component {
 					cards && cards.map((card) => {
 						return (
 							<div key={card._id} className='subtask-card'>
-								<div>{card.cardName}</div>
+								<span>{card.cardName}</span>
+								<span className='edit-icon'>
+									<i className="fas fa-pencil-alt"></i>
+								</span>
+								<span className='trash-icon' onClick={() => this.handleDelete(card._id)} >
+									<i className="fas fa-trash-alt"></i>
+								</span>
 							</div>
 						)
 					})
@@ -33,7 +48,7 @@ class Cards extends Component {
 const mapStateToProps = (state) => {
 	return {
 		// cards: state.cards.cards || [],
-		board: state.board || {}
+		board: state.board || {},
 	}
 }
 

@@ -43,4 +43,7 @@ router.get('/list/:listid/getcards', cardController.getCards);
 // Getting all lists after populating cards
 router.get('/board/:id/list/getallcards', cardController.getAllCards);
 
+// Deleting a particular card
+router.delete('/list/:listid/card/:cardid/delete', cardController.deleteCard)
+
 module.exports = router;
