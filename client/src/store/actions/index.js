@@ -397,6 +397,33 @@ const actions = {
 				})
 			}
 		})
+	},
+
+	// updating a particular card
+	updateCard: (listId, cardId, data, cb) => dispatch => {
+		fetch(`${uri}/list/${listId}/card/${cardId}/update`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		.then(res => res.json())
+		.then(cards => {
+			if (cards.message) {
+				dispatch({
+					type: 'CARD_UPDATE_SUCCESS',
+					cards
+				})
+				cb(true)
+			} else {
+				dispatch({
+					type: 'CARD_UPDATE_FAIL',
+					error: cards.error
+				})
+				cb(false)
+			}
+		})
 	}
 }
 

@@ -44,6 +44,9 @@ router.get('/list/:listid/getcards', cardController.getCards);
 router.get('/board/:id/list/getallcards', cardController.getAllCards);
 
 // Deleting a particular card
-router.delete('/list/:listid/card/:cardid/delete', cardController.deleteCard)
+router.delete('/list/:listid/card/:cardid/delete', cardController.deleteCard);
+
+// Updating a particular card
+router.put('/list/:listid/card/:cardid/update', cardController.updateCard)
 
 module.exports = router;

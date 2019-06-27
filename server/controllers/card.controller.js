@@ -95,5 +95,33 @@ module.exports = {
 				})
 			})
 		})
+	},
+
+	// Updating a new card
+	updateCard: (req, res) => {
+		let listId = req.params.listid;
+		let cardId = req.params.cardid;
+		const { cardName } = req.body;
+
+		Card.findByIdAndUpdate(cardId, {
+			cardName
+		}, { new: true }, (err, card) => {
+			if (err) {
+				return res.json({
+					error: 'Failed to update card'
+				})
+			}
+			List.find({}).populate('cards').exec((err, cards) => {
+				if (err) {
+					return res.json({
+						error: 'Failed to update list afer deleting card'
+					})
+				}
+				return res.json({
+					message: 'Card deleted, successfully',
+					cards
+				})
+			})
+		})
 	}
 }
