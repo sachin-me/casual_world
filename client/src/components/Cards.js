@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
+import RadioButton from './RadioButton';
 
 class Cards extends Component {
 
@@ -10,6 +11,7 @@ class Cards extends Component {
 		isOpen: false,
 		listName: '',
 		openCardBox: [],
+		openRadioButtons: []
 	}
 
 	handleDelete = (cardId) => {
@@ -56,6 +58,24 @@ class Cards extends Component {
 		}))
 	}
 
+	handleClick = (cardId) => {
+		const { openRadioButtons } = this.state;
+		let checkId = [...openRadioButtons, cardId];
+		let radioBtnArr = checkId.filter((val, index, arr) => arr.indexOf(val) === index);
+		this.setState({
+			isOpen: true,
+			openRadioButtons: radioBtnArr
+		})
+	}
+
+	handleClose = (cardId) => {
+		const { openRadioButtons } = this.state;
+		let removeId = openRadioButtons.filter(val => val != cardId);
+		this.setState({
+			isOpen: false,
+			openRadioButtons: removeId
+		})
+	}
 
 	componentDidMount = () => {
 		const { boardId } = this.state;
@@ -66,7 +86,7 @@ class Cards extends Component {
 
 	render() {
 		const { cards } = this.props;
-		const { openCardBox, isOpen, cardName } = this.state;
+		const { openCardBox, openRadioButtons, isOpen, cardName } = this.state;
 		return (
 			<div>
 				{
@@ -83,14 +103,33 @@ class Cards extends Component {
 										</>
 									) : (
 										<>
-											<span>{card.cardName}</span>
-											<span className='edit-icon' onClick={() => this.handleUpdate(card._id)}>
-												<i className="fas fa-pencil-alt"></i>
-											</span>
-											<span className='trash-icon' onClick={() => this.handleDelete(card._id)} >
-												<i className="fas fa-trash-alt"></i>
-											</span>
-										</>										
+											<div className='radio-btn-wrapper'>
+												{
+													(isOpen && openRadioButtons && openRadioButtons.includes(card._id)) ? (
+														<div className='modal is-active is-clipped'>
+															<div className="modal-background" onClick={() => this.handleClose(card._id)}></div>
+															<div className='modal-content'>
+																<RadioButton />
+															</div>
+															<button className="modal-close is-large" aria-label="close" onClick={() => this.handleClose(card._id)} ></button>
+														</div>
+													) : (
+														<div onClick={() => this.handleClick(card._id)} >
+														  Add task status
+														</div>
+													)	
+												}	
+											</div>
+											<div>
+												<span>{card.cardName}</span>
+												<span className='edit-icon' onClick={() => this.handleUpdate(card._id)}>
+													<i className="fas fa-pencil-alt"></i>
+												</span>
+												<span className='trash-icon' onClick={() => this.handleDelete(card._id)} >
+													<i className="fas fa-trash-alt"></i>
+												</span>
+											</div>
+										</>									
 									)
 								}
 							</div>

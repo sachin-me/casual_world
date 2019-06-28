@@ -2,23 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
 
-class UserProfileDropDown extends Component {
+class Logout extends Component {
 	handleLogout = () => {
 		this.props.dispatch(actions.logout(success => {
 			if (success) {
-				this.props.history.push('/');
+				window.location.href = '/';
 			}
 		}));
 	}
 	render() {
 		return (
-			<div className='userprofile-dropdown'>
-				<div className='logout-btn'>
-					<button onClick={this.handleLogout}>Logout</button>
-				</div>
+			<div className='logout-btn'  onClick={this.handleLogout}>
+				<button>Logout</button>
 			</div>
 		);
 	}
 }
 
-export default connect(null)(UserProfileDropDown);
+export default connect(null)(Logout);

@@ -175,8 +175,7 @@ function rootReducer (state = initState, action) {
 		case 'GET_CARDS_SUCCESS': {
 			return {
 				...state,
-				cards: action.cards,
-				allCards: action.cards.cards
+				cards: action.cards
 			}
 		}
 

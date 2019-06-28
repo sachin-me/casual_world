@@ -34,7 +34,7 @@ class CreateList extends Component {
 			<div>
 				<form action="" className='create-board-form' onSubmit={this.handleSubmit}>
 					<input type="text" name='listName' value={listName} onChange={this.handleChange} />
-					<input type="submit" value="Create List"/>
+					<input type="submit" value="Create Task"/>
 				</form>
 			</div>
 		);

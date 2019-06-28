@@ -2,7 +2,14 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const CardSchema = new Schema({
-	cardName: { type: String, required: true }
+	cardName: { type: String, required: true },
+	dueDate: { type: String, required: true },
+	status: {
+		type: String, 
+		enum: ['OPEN', 'IN PROGRESS', 'IN REVIEW', 'CLOSED'],
+		default: 'OPEN'
+	},
+	assignee: [{type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
 const Card = mongoose.model('Card', CardSchema);

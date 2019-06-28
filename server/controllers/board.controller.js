@@ -3,11 +3,10 @@ const User = require('../models/User');
 
 module.exports = {
 	createBoard: (req, res) => {
-		const { boardName, dueDate } = req.body;
+		const { boardName } = req.body;
 		const userId = req.params.id;
 		const newBoard = new Board({
-			boardName,
-			dueDate
+			boardName
 		})
 		newBoard.save((err, board) => {
 			if (err) return res.json({
@@ -32,6 +31,11 @@ module.exports = {
 	// getting boards
 	getBoards: (req, res) => {
 		const userId = req.params.id;
+		if (!userId) {
+			return res.json({
+				error: 'No user found.'
+			})
+		}
 		User.findById(userId).populate('boards').exec((err, boards) => {
 			if (err) return res.json({
 				error: 'Could not get boards'

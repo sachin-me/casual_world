@@ -30,9 +30,9 @@ class Navbar extends Component {
                 <a className="navbar-item is-light">
                   <Notification />
                 </a>
-                <a className="navbar-item is-light">
+                <Link to={`/${userId}/profile`} className="navbar-item is-light">
                   <Profile />
-                </a>
+                </Link>
               </div>
             </div>
           </nav>

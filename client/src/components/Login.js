@@ -31,14 +31,18 @@ class Login extends Component {
       const { message, error } = this.props;
       if (success) {
         this.setState({
-          message: message
+          message: message,
+          email: '',
+          password: ''
         })
         this.props.history.push('/');
       } else {
         this.setState({
-          error: error
+          error: error,
+          email: '',
+          password: ''
         })
-        this.props.history.push('/dashboard');
+        this.props.history.push('/login');
       }
     }))
   }

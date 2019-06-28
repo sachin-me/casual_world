@@ -120,7 +120,7 @@ class Lists extends Component {
 											</div>
 										) : (
 											<div onClick={() => this.handleClick(list._id)} className=''>
-												+ <span>Add a Card</span>
+												+ <span>Add a subtask</span>
 											</div>
 										)
 									}

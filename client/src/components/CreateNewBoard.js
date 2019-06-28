@@ -5,7 +5,6 @@ import actions from '../store/actions';
 class CreateNewBoard extends Component {
 	state = {
 		boardName: '',
-		dueDate: '',
 		userId: this.props.currentUser.id
 	}
 	handleChange = (e) => {
@@ -16,8 +15,8 @@ class CreateNewBoard extends Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
-		const { boardName, dueDate, userId } = this.state;
-		const data = { boardName, dueDate, userId }
+		const { boardName, userId } = this.state;
+		const data = { boardName, userId }
 		this.props.dispatch(actions.createBoard(data, userId, success => {
 			if (success) {
 				this.props.history.push(`/${userId}/getboards`);
@@ -27,13 +26,12 @@ class CreateNewBoard extends Component {
 		}));
 	}
   render() {
-		const { boardName, dueDate } = this.state;
+		const { boardName } = this.state;
     return (
 			<>
 				<form action="" className='create-board-form' onSubmit={this.handleSubmit}>
-					<input type="text" name='boardName' value={boardName} placeholder='Enter Board name' onChange={this.handleChange} />
-					<input type="datetime-local" name="dueDate" value={dueDate} id="" onChange={this.handleChange} />
-					<input type="submit" value="Create Board"/>
+					<input type="text" name='boardName' value={boardName} placeholder='Enter Project name' onChange={this.handleChange} />
+					<input type="submit" value="Create Project"/>
 				</form>
 			</>
 		)

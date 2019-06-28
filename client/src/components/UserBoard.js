@@ -5,7 +5,7 @@ class UserBoard extends Component {
     return (
       <div className='user-board'>
         <i className="fas fa-poll"></i>
-        <span>Boards</span>
+        <span>Projects</span>
       </div>
     );
   }

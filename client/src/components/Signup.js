@@ -32,14 +32,22 @@ class Signup extends Component {
       if (success) {
         const { message } = this.props;
         this.setState({
-          message: message
+          message: message,
+          name: '',
+          email: '',
+          password: ''
         })
+        this.props.history.push('/login');
       } else {
         const { error } = this.props;
         if (error !== 'undefined') {
           this.setState({
-            error: error
+            error: error,
+            name: '',
+            email: '',
+            password: ''
           })
+          this.props.history.push('/signup');
         }
       }
     }));
@@ -83,7 +91,7 @@ class Signup extends Component {
           <div className="field">
             <p className="control">
               <button className="button is-primary">
-                Login
+                Signup
               </button>
             </p>
           </div>

@@ -371,6 +371,7 @@ nav.navbar {
 
 .list-card {
 	max-width: 400px;
+  height: fit-content;	
 	.trash-icon, .edit-icon {
 		margin-left: 1rem;
 		color: #27a1e8;
@@ -423,18 +424,38 @@ nav.navbar {
 	}
 }
 
+.radio-btn-wrapper {
+	/*position: relative;*/
+	.RadioButton-component-wrapper {
+		padding: 0.4rem;
+    position: absolute;
+    background-color: darkgray;
+    font-size: 1rem;
+	}
+	.checkbox, .radio {
+		&:hover {
+			color: #27a1e8;
+		}
+	}
+}
+
 // user profile dropdown
 
 .userprofile-dropdown {
-	box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
-	position: absolute;
-	background-color: #fff;
-	top: 60px;
-	right: 0px;
-	width: 304px;
-	max-height: 175px;
-	text-align: center;
-	padding: 1rem 0;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+  position: absolute;
+  background-color: #fff;
+  top: 50%;
+  right: 50%;
+  max-width: 304px;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 1rem 0;
+  div {
+  	margin: 0.75rem 0;
+  }
 	.logout-btn {
 		border: 1px solid #27a1e8;
 		padding: 0.5rem 0;

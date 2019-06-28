@@ -301,8 +301,8 @@ const actions = {
 	},
 
 	// Creating new card
-	createCard: (data, boardId, listId, cb) => dispatch => {
-		fetch(`${uri}/board/${boardId}/list/${listId}/createcard`, {
+	createCard: (data, userId, boardId, listId, cb) => dispatch => {
+		fetch(`${uri}/${userId}/board/${boardId}/list/${listId}/createcard`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

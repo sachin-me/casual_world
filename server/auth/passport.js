@@ -12,10 +12,10 @@ module.exports = function (passport) {
       
       User.findOne({ email: email }, (err, user) => {
         if (err) return done(err);
-        if (!user) return done(null, false);
+        if (!user) return done(err, false);
         bcrypt.compare(password, user.password, (err, isMatch) => {
-          if (err) return done(null, false);
-          if (!isMatch) return done(null, false);
+          if (err) return done(err, false);
+          if (!isMatch) return done(err, false);
           else return done(null, user);
         })
       })

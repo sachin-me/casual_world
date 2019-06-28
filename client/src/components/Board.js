@@ -48,7 +48,7 @@ class Board extends Component {
 								</div>
 							) : (
 								<div onClick={this.handleClick} className='add-list'>
-									+ <span>Add a list</span>
+									+ <span>Add a task</span>
 								</div>
 							)
 						}

@@ -1,29 +1,37 @@
 const Card = require('../models/Card');
 const List = require('../models/List');
 const Board = require('../models/Board');
+const User = require('../models/User');
 
 module.exports = {
 	createCard: (req, res) => {
-		const { cardName } = req.body;
+		const { cardName, dueDate } = req.body;
 		const listId = req.params.listid;
-		const newCard = new Card({
-			cardName
-		})
-		newCard.save((err, card) => {
-			if (err) return res.json({
-				error: 'Could not create card'
+		const userId = req.params.userid;
+
+		User.findById(userId, (err, user) => {
+
+			const newCard = new Card({
+				cardName,
+				dueDate,
+				assignee: user._id
 			})
-			List.findByIdAndUpdate(listId, {
-				$push: {
-					cards: card._id
-				}
-			}, { new: true }, (err, createdCard) => {
+			newCard.save((err, card) => {
 				if (err) return res.json({
-					error: 'Could not update list'
+					error: 'Could not create card'
 				})
-				return res.json({
-					message: 'Card created, successfully',
-					createdCard
+				List.findByIdAndUpdate(listId, {
+					$push: {
+						cards: card._id
+					}
+				}, { new: true }, (err, createdCard) => {
+					if (err) return res.json({
+						error: 'Could not update list'
+					})
+					return res.json({
+						message: 'Card created, successfully',
+						createdCard
+					})
 				})
 			})
 		})

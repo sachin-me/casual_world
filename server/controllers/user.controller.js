@@ -5,7 +5,14 @@ const User = require('../models/User');
 module.exports = {
   createUser: (req, res) => {
 
-    const { name, email, password } = req.body
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.json({
+        error: 'Name, Email and Password are mandatory.'
+      })
+    }
+
     User.findOne({ email: email }, (err, user) => {
       if (err) return res.json({
         error: 'Could not find the user'
@@ -41,7 +48,7 @@ module.exports = {
         error: 'Could not login user'
       })
       if (!data) return res.json({
-        error: 'Please enter valid credentials'
+        error: 'No matching user found.'
       })
       const id = data._id
       const { name, email } = data;

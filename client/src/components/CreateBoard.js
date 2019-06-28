@@ -8,7 +8,7 @@ class CreateBoard extends Component {
     return (
       <>
 				<Link to={`/${currentUser.id}/createboard`}>
-        	<div className='hover' onClick={this.handleClick}>+<span>Create a board</span></div>
+        	<div className='hover' onClick={this.handleClick}>+<span>Create a project</span></div>
 				</Link>
       </>
     );
