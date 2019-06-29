@@ -20,14 +20,25 @@
 }
 
 // Header
+.columns {
+  margin-left: 10rem !important;
+}
 .user-entry {
 	.login-btn, .signup-btn {
 		position: absolute;
 		top: 1.3%;
 		z-index: 999;
+		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		.button.is-link.is-inverted.is-outlined {
+    border: none !important;
+    &:hover {
+    	color: #27a1e8 !important;
+    	border-radius: 0;
+    }
+}
 	}
 	.login-btn {
-		right: 16%;
+		right: 1.3%;
 	}
 	.signup-btn {
     right: 8%;
@@ -35,6 +46,16 @@
 }
 
 // Dashboard
+
+
+
+@media screen and (min-width: 769px){
+	.hero.is-medium .hero-body {
+    padding-bottom: 1rem !important;
+    padding-top: 4rem !important;
+ }
+}
+
 .dashboard-wrapper {
   display: flex;
   justify-content: space-between;
@@ -56,6 +77,7 @@
 
 nav.navbar {
   background-color: #27a1e8;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .column-wrapper {
@@ -84,6 +106,9 @@ nav.navbar {
 		max-width: 200px;
     a {
       color: #4a4a4a;
+      &:hover {
+      	color: #27a1e8;
+      }
     }
     &:hover {
       background: rgba(9,30,66,.13);
@@ -91,13 +116,16 @@ nav.navbar {
       padding: 5px;
       border-radius: 4px;
       cursor: pointer;
-      color: #3273dc;
+      color: #27a1e8 !important;
     }
   }
 }
 
 .board-link {
   padding-left: 5rem !important;
+  a {
+  	color: #4a4a4a;
+  }
   div {
     // margin-top: 5px;
     span {

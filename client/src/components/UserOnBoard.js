@@ -27,7 +27,9 @@ class UserOnBoard extends Component {
           </div>
           <div className='hover'>
             <Link to='/'>
-              <HomeIcon /><span className='home-span'>Home</span>
+              <div>
+                <HomeIcon /><span className='home-span'>Home</span>
+              </div>
             </Link>
           </div>
           <div className='create-team-wrapper'>

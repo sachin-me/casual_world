@@ -109,7 +109,7 @@ class Cards extends Component {
 														<div className='modal is-active is-clipped'>
 															<div className="modal-background" onClick={() => this.handleClose(card._id)}></div>
 															<div className='modal-content'>
-																<RadioButton />
+																<RadioButton status={card.status} />
 															</div>
 															<button className="modal-close is-large" aria-label="close" onClick={() => this.handleClose(card._id)} ></button>
 														</div>

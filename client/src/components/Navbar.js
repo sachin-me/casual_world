@@ -19,20 +19,30 @@ class Navbar extends Component {
 								<Link to='/' className="navbar-item is-light">
 									<HomeIcon />
 								</Link>
-                <Link to={`/${userId}/getboards`} className="navbar-item is-light">
-                  <UserBoard />
-                </Link>
+                {
+                  userId ? (
+                    <Link to={`/${userId}/getboards`} className="navbar-item is-light">
+                      <UserBoard />
+                    </Link>
+                  ) : <div></div>
+                }
               </div>
               <div className="navbar-end">
-                <a className="navbar-item is-light">
-                  <Create />
-                </a>
-                <a className="navbar-item is-light">
-                  <Notification />
-                </a>
-                <Link to={`/${userId}/profile`} className="navbar-item is-light">
-                  <Profile />
-                </Link>
+                {
+                  userId ? (
+                    <>
+                      <a className="navbar-item is-light">
+                        <Create />
+                      </a>
+                      <a className="navbar-item is-light">
+                        <Notification />
+                      </a>
+                      <Link to={`/${userId}/profile`} className="navbar-item is-light">
+                        <Profile />
+                      </Link>
+                    </>
+                  ) : ''
+                }
               </div>
             </div>
           </nav>
