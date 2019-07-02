@@ -79,7 +79,7 @@ class Lists extends Component {
 		this.props.dispatch(actions.getAllCards(boardId));
 	}
 	render() {
-		const { getAllCards, allLists } = this.props;
+		const { getAllCards, allLists, boardId } = this.props;
 		const { openInputBox, isOpen, openListBox, listName } = this.state;
 		
 		let filterCard = getAllCards.filter(list1 => allLists.some(list2 => list1._id === list2._id));
@@ -110,7 +110,7 @@ class Lists extends Component {
 									)
 								}
 								<div>
-									<Cards cards={list.cards} listId={list._id} />
+									<Cards cards={list.cards} listId={list._id} boardId={boardId} />
 								</div>
 								<div>
 									{

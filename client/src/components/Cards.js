@@ -85,7 +85,7 @@ class Cards extends Component {
 	}
 
 	render() {
-		const { cards, listId } = this.props;
+		const { cards, listId, boardId } = this.props;
 		const { openCardBox, openRadioButtons, isOpen, cardName } = this.state;
 		return (
 			<div>
@@ -110,7 +110,7 @@ class Cards extends Component {
 														<div className='modal is-active is-clipped'>
 															<div className="modal-background" onClick={() => this.handleClose(card._id)}></div>
 															<div className='modal-content'>
-																<RadioButton status={card.status} cardId={card._id} listId={listId} />
+																<RadioButton status={card.status} cardId={card._id} listId={listId} boardId={boardId} />
 															</div>
 															<button className="modal-close is-large" aria-label="close" onClick={() => this.handleClose(card._id)} ></button>
 														</div>

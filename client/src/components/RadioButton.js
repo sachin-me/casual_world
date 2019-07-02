@@ -13,11 +13,15 @@ class RadioButton extends Component {
 
 		e.persist();
 		const { value } = e.target;
-		const { cardId, listId } = this.props;
-
+		const { cardId, listId, currentUser, boardId } = this.props;
+		console.log(currentUser)
 		const data = { value }
 
-		this.props.dispatch(actions.updateTaskStatus(listId, cardId, data))
+		this.props.dispatch(actions.updateTaskStatus(listId, cardId, data, success => {
+			if (success) {
+				window.location.href = `/${currentUser.id}/board/${boardId}`
+			}
+		}))
 	}
 
 	render() {
@@ -42,4 +46,10 @@ class RadioButton extends Component {
 	}
 }
 
-export default connect(null)(RadioButton); 
+const mapStateToProps = state => {
+	return {
+		currentUser: state.currentUser || {}
+	}
+}
+
+export default connect(mapStateToProps)(RadioButton); 

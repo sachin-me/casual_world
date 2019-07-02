@@ -427,7 +427,7 @@ const actions = {
 	},
 
 	// Setting task status for a specific card
-	updateTaskStatus: (listId, cardId, data) => dispatch => {
+	updateTaskStatus: (listId, cardId, data, cb) => dispatch => {
 			fetch(`${uri}/list/${listId}/card/${cardId}/updatetaskstatus`, {
 				method: 'POST',
 				headers: {
@@ -442,11 +442,13 @@ const actions = {
 						type: 'TASK_STATUS_UPDATE_SUCCESS',
 						updatedTask
 					})
+					cb(true)
 				} else {
 					dispatch({
 						type: 'TASK_STATUS_UPDATE_FAIL',
 						error: updatedTask.error
 					})
+					cb(false)
 				}
 			})
 	}
