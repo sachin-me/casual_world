@@ -131,5 +131,38 @@ module.exports = {
 				})
 			})
 		})
+	},
+
+	// Setting task status for a specific card
+	updateTaskStatus: (req, res) => {
+
+		let listId = req.params.listid;
+		let cardId = req.params.cardid;
+
+		const { value } = req.body;
+
+		Card.findByIdAndUpdate(cardId, {
+			$set: {
+				status: value
+			}
+		}, { new: true }, (err, card) => {
+			if (err) {
+				return res.json({
+					error: 'Failed to update card'
+				})
+			}
+
+			List.find({}).populate('cards').exec((err, cards) => {
+				if (err) {
+					return res.json({
+						error: 'Failed to update task status'
+					})
+				}
+				return res.json({
+					message: 'Task status updated, successfully',
+					cards
+				})
+			})
+		})
 	}
 }

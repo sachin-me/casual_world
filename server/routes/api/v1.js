@@ -49,4 +49,7 @@ router.delete('/list/:listid/card/:cardid/delete', cardController.deleteCard);
 // Updating a particular card
 router.put('/list/:listid/card/:cardid/update', cardController.updateCard)
 
+// setting task status for a specific card
+router.post('/list/:listid/card/:cardid/updatetaskstatus', cardController.updateTaskStatus)
+
 module.exports = router;

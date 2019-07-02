@@ -85,7 +85,7 @@ class Cards extends Component {
 	}
 
 	render() {
-		const { cards } = this.props;
+		const { cards, listId } = this.props;
 		const { openCardBox, openRadioButtons, isOpen, cardName } = this.state;
 		return (
 			<div>
@@ -93,7 +93,8 @@ class Cards extends Component {
 					cards && cards.map((card) => {
 						return (
 							<div key={card._id} className='subtask-card'>
-								{
+								<div className='task-status'>{card.status}</div>
+								{ 
 									isOpen && openCardBox && openCardBox.includes(card._id) ? (
 										<>
 											<form action=""  onSubmit={(e) => this.handleSubmit(e, card._id)}>
@@ -109,13 +110,15 @@ class Cards extends Component {
 														<div className='modal is-active is-clipped'>
 															<div className="modal-background" onClick={() => this.handleClose(card._id)}></div>
 															<div className='modal-content'>
-																<RadioButton status={card.status} />
+																<RadioButton status={card.status} cardId={card._id} listId={listId} />
 															</div>
 															<button className="modal-close is-large" aria-label="close" onClick={() => this.handleClose(card._id)} ></button>
 														</div>
 													) : (
 														<div onClick={() => this.handleClick(card._id)} >
-														  Add task status
+															{
+																card.status !== 'OPEN' ? 'Update task status' : 'Add task status'
+															}
 														</div>
 													)	
 												}	

@@ -424,6 +424,31 @@ const actions = {
 				cb(false)
 			}
 		})
+	},
+
+	// Setting task status for a specific card
+	updateTaskStatus: (listId, cardId, data) => dispatch => {
+			fetch(`${uri}/list/${listId}/card/${cardId}/updatetaskstatus`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			.then(res => res.json())
+			.then(updatedTask => {
+				if (updatedTask.message) {
+					dispatch({
+						type: 'TASK_STATUS_UPDATE_SUCCESS',
+						updatedTask
+					})
+				} else {
+					dispatch({
+						type: 'TASK_STATUS_UPDATE_FAIL',
+						error: updatedTask.error
+					})
+				}
+			})
 	}
 }
 

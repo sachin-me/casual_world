@@ -1,56 +1,45 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import actions from '../store/actions';
 
 class RadioButton extends Component {
 		
 	state = {
-		open: false,
-		inProgress: false,
-		inReview: false,
-		closed: false,
-		group1: false
+		selectedStatus: ['OPEN', 'IN PROGRESS', 'IN REVIEW', 'CLOSED']
 	}
 
 	handleChange = (e) => {
+
 		e.persist();
-		const value = e.target.value;
-		const text = [e.target.innerText];
-		console.log(text, 'checking innerText value')
-		this.setState((state) => ({
-			open: false,
-      inProgress: false,
-      inReview: false,
-      closed: false,
-      [e.target.value]: true
-		}))
+		const { value } = e.target;
+		const { cardId, listId } = this.props;
+
+		const data = { value }
+
+		this.props.dispatch(actions.updateTaskStatus(listId, cardId, data))
 	}
 
 	render() {
-		const { status } = this.props;
-		const { open, inProgress, inReview, closed } = this.state;
-		console.log(status, 'checking status in RadioButton');
+		const { selectedStatus } = this.state;
+
 		return (
 			<>
 				<div className="control">
-				  <label className="radio">
-				    <input type="radio" name="group1" value={open ? status : "open"} required onChange={this.handleChange} />
-				    Open
-				  </label>
-				  <label className="radio">
-				    <input type="radio" name="group1" value={inProgress ? status : "inProgress"} required onChange={this.handleChange} />
-				    IN PROGRESS
-				  </label>
-				  <label className="radio">
-				    <input type="radio" name="group1" value={inReview ? status : "inReview"} required onChange={this.handleChange} />
-				    IN REVIEW
-				  </label>
-				  <label className="radio">
-				    <input type="radio" name="group1" value={closed ? status : "closed"} required onChange={this.handleChange} />
-				    CLOSED
-				  </label>
+			  	{
+			  		selectedStatus ? selectedStatus.map((taskStatus, index) => {
+			  			return (
+			  				<label className="radio" key={index}>
+			    				<input type="radio" name="group1" value={taskStatus} required onChange={this.handleChange} />
+			    				{taskStatus}
+							  </label>
+			  			)
+			  		}) : ''
+			  	}
 				</div>
 			</>
 		)
 	}
 }
 
-export default RadioButton; 
+export default connect(null)(RadioButton); 
