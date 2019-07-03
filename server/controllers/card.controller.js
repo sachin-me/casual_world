@@ -141,28 +141,61 @@ module.exports = {
 
 		const { value } = req.body;
 
-		Card.findByIdAndUpdate(cardId, {
-			$set: {
-				status: value
-			}
-		}, { new: true }, (err, card) => {
-			if (err) {
-				return res.json({
-					error: 'Failed to update card'
-				})
-			}
-
-			List.find({}).populate('cards').exec((err, cards) => {
+		if (value === 'CLOSED') {
+			Card.findByIdAndDelete(cardId, (err, card) => {
 				if (err) {
 					return res.json({
-						error: 'Failed to update task status'
+						error: 'Could not delete card'
 					})
 				}
-				return res.json({
-					message: 'Task status updated, successfully',
-					cards
+				List.findByIdAndUpdate(listId, {
+					$pull: {
+						cards: card._id
+					}
+				}, { upsert: true }, (err, list) => {
+					if (err) {
+						return res.json({
+							error: 'Could not update list'
+						})
+					}
+					List.find({}).populate('cards').exec((err, cards) => {
+						if (err) {
+							return res.json({
+								error: 'Failed to update list afer deleting card'
+							})
+						}
+						return res.json({
+							message: 'Card deleted, successfully',
+							cards
+						})
+					})
 				})
 			})
-		})
+		} else {
+			Card.findByIdAndUpdate(cardId, {
+				$set: {
+					status: value
+				}
+			}, { new: true }, (err, card) => {
+				if (err) {
+					return res.json({
+						error: 'Failed to update card'
+					})
+				}
+
+				List.find({}).populate('cards').exec((err, cards) => {
+					if (err) {
+						return res.json({
+							error: 'Failed to update task status'
+						})
+					}
+					return res.json({
+						message: 'Task status updated, successfully',
+						cards
+					})
+				})
+			})
+		}
+
 	}
 }

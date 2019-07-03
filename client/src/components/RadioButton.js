@@ -14,7 +14,6 @@ class RadioButton extends Component {
 		e.persist();
 		const { value } = e.target;
 		const { cardId, listId, currentUser, boardId } = this.props;
-		console.log(currentUser)
 		const data = { value }
 
 		this.props.dispatch(actions.updateTaskStatus(listId, cardId, data, success => {
