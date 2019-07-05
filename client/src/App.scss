@@ -399,7 +399,10 @@ nav.navbar {
 
 .list-card {
 	max-width: 400px;
-  height: fit-content;	
+  height: fit-content;
+  .list-info-wrapper {
+  	margin-bottom: 2.5rem;
+  }	
 	.trash-icon, .edit-icon {
 		margin-left: 1rem;
 		color: #27a1e8;
@@ -508,5 +511,17 @@ nav.navbar {
 				color: #fff;
 			}
 		}
+	}
+}
+
+// Footer
+.footer {
+	background: #27a1e8 !important;
+	padding: 1.9rem !important;
+	bottom: 0 !important;
+	position: absolute !important;
+	width: 100% !important;
+	a {
+		color: #fff !important;
 	}
 }

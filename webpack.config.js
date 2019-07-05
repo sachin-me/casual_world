@@ -2,6 +2,7 @@
 var webpack = require('webpack');
 var path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -51,6 +52,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: "bundle.css",
+    }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, './client/src/firebase-messaging-sw.js'),
     })
   ]
 }

@@ -3,6 +3,10 @@
 /.pnp
 .pnp.js
 
+.env
+firebaseConfig.js
+service-account.json
+
 # testing
 /coverage
 

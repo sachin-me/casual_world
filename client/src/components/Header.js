@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import Footer from './Footer';
 
 class Header extends Component {
   render() {
@@ -32,6 +33,9 @@ class Header extends Component {
               </div>
             </div>
           </div>
+					<div>
+						<Footer />
+					</div>
         </section>  
       </>
     );

@@ -7,6 +7,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const passport = require('passport');
+const soketIo = require('socket.io');
+const http = require('http');
+
 const port = 8000;
 
 mongoose.connect(
@@ -58,6 +61,17 @@ require('./server/auth/passport')(passport);
 app.use("/api/v1", require("./server/routes/api/v1"));
 app.use(require("./server/routes/index"));
 
-app.listen(port, () => {
+// Creating http server
+const server = http.createServer(app);
+const io = soketIo(server);
+
+io.on('connection', (socket) => {
+	console.log('User connected');
+	socket.on('disconnect', () => {
+		console.log('User disconnected');
+	})
+})
+
+server.listen(port, () => {
  console.log(`server is running on http://localhost:${port}`);
 });

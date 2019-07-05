@@ -98,7 +98,7 @@ class Lists extends Component {
 											</form>
 										</>
 									) : (
-										<>
+										<div className='list-info-wrapper'>
 											<span>{list.listName}</span>
 											<span className='edit-icon' onClick={() => this.handleUpdate(list._id)}>
 												<i className="fas fa-pencil-alt"></i>
@@ -106,7 +106,7 @@ class Lists extends Component {
 											<span className='trash-icon' onClick={() => this.handleDelete(list._id)} >
 												<i className="fas fa-trash-alt"></i>
 											</span>
-										</>
+										</div>
 									)
 								}
 								<div>
