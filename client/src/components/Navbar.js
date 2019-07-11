@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
+
 import HomeIcon from '../containers/HomeIcon';
 import UserBoard from './UserBoard';
 import Create from './Create';
 import Notification from './Notification';
 import Profile from './Profile';
 
+const socket = io('http://localhost:8000');
+
 class Navbar extends Component {
+
+	state = {
+		notifications: []
+	}
+
+	componentDidMount = () => {
+		const { notifications } = this.state;
+		console.log(socket, 'cmd called');
+		socket.on('notifications', (notification) => {
+			console.log('socket called');
+			console.log(notification, 'checking notification');
+			this.setState({
+				notifications: [...notifications, notification]
+			})
+		})
+	}
+
 	render() {
+		const { notifications } = this.state;
 		const { currentUser } = this.props;
 		const userId = currentUser.id || ''
 		return (
@@ -36,6 +58,7 @@ class Navbar extends Component {
                       </a>
                       <a className="navbar-item is-light">
                         <Notification />
+												<span>{notifications ? notifications.length: ''}</span>
                       </a>
                       <Link to={`/${userId}/profile`} className="navbar-item is-light">
                         <Profile />

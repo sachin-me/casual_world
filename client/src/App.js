@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
 
 import Main from './components/Main';
 import './App.scss';

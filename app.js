@@ -67,6 +67,14 @@ const io = soketIo(server);
 
 io.on('connection', (socket) => {
 	console.log('User connected');
+	socket.on('notifications', (notification) => {
+		const { dueDate } = notification;
+		const crtTS = Date.now(dueDate)
+		
+		setTimeout(() => {
+			io.emit('notifications', notification)
+		}, crtTS - (2*60*1000))
+	})
 	socket.on('disconnect', () => {
 		console.log('User disconnected');
 	})

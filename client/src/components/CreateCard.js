@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
+
 import actions from '../store/actions';
+
+const socket = io();
 
 class CreateCard extends Component {
 	state = {
@@ -31,7 +35,7 @@ class CreateCard extends Component {
 			cardName: '',
 			dueDate: ''
 		})
-
+		socket.emit('notifications', this.state);
 		this.props.dispatch(actions.createCard(data, currentUser.id, boardId, listId, success => {
 			if (success) {
 				this.props.dispatch(actions.getCards(listId))
