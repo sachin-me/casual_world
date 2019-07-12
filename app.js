@@ -9,6 +9,7 @@ const path = require("path");
 const passport = require('passport');
 const soketIo = require('socket.io');
 const http = require('http');
+const bt = require('big-time');
 
 const port = 8000;
 
@@ -69,11 +70,11 @@ io.on('connection', (socket) => {
 	console.log('User connected');
 	socket.on('notifications', (notification) => {
 		const { dueDate } = notification;
-		const crtTS = Date.now(dueDate)
-		
-		setTimeout(() => {
+		const crtTS = +new Date(dueDate);
+
+		const pushNotification = setTimeout(() => {
 			io.emit('notifications', notification)
-		}, crtTS - (2*60*1000))
+		}, Math.abs(crtTS - (+new Date())))
 	})
 	socket.on('disconnect', () => {
 		console.log('User disconnected');
