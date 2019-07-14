@@ -57,7 +57,7 @@ const actions = {
             type: 'LOGIN_FAIL',
             error: data.error
           })
-          cb(false)
+          cb(false, data.error)
         }
       })
     }

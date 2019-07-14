@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
 import actions from '../store/actions';
 import helperFunctions from "../utility";
 import commonComponents from "./CommonComponents";
@@ -19,7 +20,7 @@ class Signup extends Component {
 		validPassword: true
   }
 
-  handleChane = (e) => {
+  handleChange = (e) => {
     const { value, name } = e.target;
     this.setState({
       [name]: value
@@ -66,9 +67,9 @@ class Signup extends Component {
           <h3 className='center'>Create an account</h3>
         </div>
         <form onSubmit={this.handleSubmit}>
-					<InputBox name="name" type="text" placeholder="Enter the name" handleChange={this.handleChane}/>
-          <InputBox name="email" type="text" placeholder="Enter the email" handleChange={this.handleChane}onBlur={this.validateEmailPassword}/>  
-          <InputBox name="password" type="password" placeholder="Enter the password" handleChange={this.handleChane}onBlur={this.validateEmailPassword}/>
+					<InputBox name="name" type="text" placeholder="Enter the name" handleChange={this.handleChange}/>
+          <InputBox name="email" type="text" placeholder="Enter the email" handleChange={this.handleChange} onBlur={this.validateEmailPassword}/>  
+          <InputBox name="password" type="password" placeholder="Enter the password" handleChange={this.handleChange} onBlur={this.validateEmailPassword}/>
           <SubmitButton text="Sign up" />
         </form>
         <Message message={message} error={error}/>
