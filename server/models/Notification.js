@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const NotificationSchema = new Schema({
-	card: { type: Schema.Types.ObjectId, ref: 'Card' },
-	notifyTime: { type: String },
-	deadLine: { type: String },
+	card: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
+	notifyTime: { type: Date },
+	deadLine: { type: Date },
 	read: { type: Boolean }
 })
 

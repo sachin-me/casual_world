@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import actions from '../store/actions';
+import helperFunctions from "../utility";
 
 class Signup extends Component {
-
   state = {
     name: '',
     email: '',
     password: '',
     message: '',
-    error: ''
+		error: '',
+		validEmail: true,
+		validPassword: true
   }
 
   handleChane = (e) => {
@@ -18,43 +20,57 @@ class Signup extends Component {
     this.setState({
       [name]: value
     })
-  }
+	}
+	
+	validateEmailPassword = () => {
+		let { email, password } = this.state;
+		this.setState({
+			validEmail: helperFunctions.validateEmail(email),
+			validPassword: helperFunctions.validatePassword(password)
+		})
+	}
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { name, email, password } = this.state;
-    const data = { name, email, password };
-    
-    if (name.length == 0 && email.length == 0 && password.length == 0) return this.setState({
-      message: 'Please fill the form'
-    })
-    this.props.dispatch(actions.createUser(data, success => {
-      if (success) {
-        const { message } = this.props;
-        this.setState({
-          message: message,
-          name: '',
-          email: '',
-          password: ''
-        })
-        this.props.history.push('/login');
-      } else {
-        const { error } = this.props;
-        if (error !== 'undefined') {
-          this.setState({
-            error: error,
-            name: '',
-            email: '',
-            password: ''
-          })
-          this.props.history.push('/signup');
-        }
-      }
-    }));
+    const { name, email, password, validEmail, validPassword } = this.state;
+		
+		if (validEmail && validPassword) {
+			const data = { name, email, password };
+			if (name.length == 0 && email.length == 0 && password.length == 0) return this.setState({
+				message: 'Please fill the form'
+			})
+			this.props.dispatch(actions.createUser(data, success => {
+				if (success) {
+					const { message } = this.props;
+					this.setState({
+						message: message,
+						name: '',
+						email: '',
+						password: ''
+					})
+					this.props.history.push('/login');
+				} else {
+					const { error } = this.props;
+					if (error !== 'undefined') {
+						this.setState({
+							error: error,
+							name: '',
+							email: '',
+							password: ''
+						})
+						this.props.history.push('/signup');
+					}
+				}
+			}));
+		} else {
+			this.setState({
+				error: 'Email or Password is invalid'
+			})
+		}
   }
 
   render() {
-    const { name, email, password, message, error } = this.state;
+		const { name, email, password, message, error, validEmail, validPassword } = this.state;
     return (
       <div className='form-wrapper'>
         <div>
@@ -70,7 +86,7 @@ class Signup extends Component {
           <div className="field">
             <label className="label">Email</label>
             <div className="control has-icons-left has-icons-right">
-              <input className="input" type="email" name='email' placeholder="Email input" value={email} onChange={this.handleChane} />
+              <input className={"input " + validEmail} onBlur={this.validateEmailPassword} type="email" name='email' placeholder="Email input" value={email} onChange={this.handleChane} />
               <span className="icon is-small is-left">
                 <i className="fas fa-envelope"></i>
               </span>
@@ -82,7 +98,7 @@ class Signup extends Component {
           <div className="field">
             <label className="label">Password</label>
             <p className="control has-icons-left">
-              <input className="input" type="password" name='password' placeholder="Password" value={password} onChange={this.handleChane} />
+              <input className={"input " + validPassword} onBlur={this.validateEmailPassword} type="password" name='password' placeholder="Password" value={password} onChange={this.handleChane} />
               <span className="icon is-small is-left">
                 <i className="fas fa-lock"></i>
               </span>
@@ -96,7 +112,7 @@ class Signup extends Component {
             </p>
           </div>
         </form>
-        <div className="signup-status center">
+        <div className="signup-status center has-text-danger">
           {
             (message && message != 'undefined') ? message : error
           }

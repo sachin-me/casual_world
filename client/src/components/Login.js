@@ -84,7 +84,7 @@ class Login extends Component {
             </p>
           </div>
         </form>
-        <div className="signup-status center">
+        <div className="signup-status center has-text-danger">
           {
             (message && message != 'undefined') ? message : error
           }

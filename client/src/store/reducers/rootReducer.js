@@ -28,6 +28,7 @@ function rootReducer (state = initState, action) {
     }
 
     case 'LOGIN_SUCCESS': {
+			console.log(action.user, 'checking user after login');
       return {
         ...state,
         currentUser: action.user,

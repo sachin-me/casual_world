@@ -2,6 +2,7 @@ const Card = require('../models/Card');
 const List = require('../models/List');
 const Board = require('../models/Board');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 
 module.exports = {
 	createCard: (req, res) => {
@@ -20,6 +21,31 @@ module.exports = {
 				if (err) return res.json({
 					error: 'Could not create card'
 				})
+
+				const cardId = card._id;
+				const data = { cardId, ...req.body }
+
+				// creating new notification when a new card is created
+				const crtTS = +new Date(dueDate);
+				const newNotification = new Notification({
+					card: cardId,
+					notifyTime: Math.abs(crtTS - (+new Date())),
+					deadLine: crtTS,
+					read: false
+				})
+
+				newNotification.save((err, notification) => {
+					if (err) {
+						return res.json({
+							error: 'Failed to create notification'
+						})
+					}
+					console.log(notification, 'checking notification in card controller');
+					return res.json({
+						message: 'Notification created, successfully'
+					})
+				})
+
 				List.findByIdAndUpdate(listId, {
 					$push: {
 						cards: card._id
@@ -80,6 +106,7 @@ module.exports = {
 					error: 'Could not delete card'
 				})
 			}
+
 			List.findByIdAndUpdate(listId, {
 				$pull: {
 					cards: card._id

@@ -19,7 +19,6 @@ class Navbar extends Component {
 
 	componentDidMount = () => {
 		const { notifications } = this.state;
-		console.log(socket, 'cmd called');
 		socket.on('notifications', (notification) => {
 			console.log('socket called');
 			console.log(notification, 'checking notification');

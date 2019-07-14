@@ -36,6 +36,7 @@ module.exports = {
 				error: 'No user found.'
 			})
 		}
+		console.log(userId, 'checking user id');
 		User.findById(userId).populate('boards').exec((err, boards) => {
 			if (err) return res.json({
 				error: 'Could not get boards'

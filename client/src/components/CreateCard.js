@@ -32,8 +32,8 @@ class CreateCard extends Component {
 
 		const data = { cardName, dueDate }
 		console.log(this.state)
-		socket.emit('notifications', this.state);
-		this.props.dispatch(actions.createCard(data, currentUser.id, boardId, listId, success => {
+		// socket.emit('notifications', this.state);
+		this.props.dispatch(actions.createCard(this.state, currentUser.id, boardId, listId, success => {
 			if (success) {
 				this.props.dispatch(actions.getCards(listId))
 				this.props.dispatch(actions.getAllCards(boardId));

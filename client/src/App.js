@@ -5,13 +5,7 @@ import './App.scss';
 import 'bulma';
 
 class App extends Component {
-	componentDidMount() {
-		(function() {
-		  if('serviceWorker' in navigator) {
-		    navigator.serviceWorker.register('./firebase-messaging-sw.js');
-		  }
-		})();
-	}
+	
   render() {
     return (
       <div className='app'>

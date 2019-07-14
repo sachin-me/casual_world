@@ -10,6 +10,7 @@ const passport = require('passport');
 const soketIo = require('socket.io');
 const http = require('http');
 const bt = require('big-time');
+const notify = require('./server/util');
 
 const port = 8000;
 
@@ -59,6 +60,9 @@ app.use(cors());
 // import passport config
 require('./server/auth/passport')(passport);
 
+// Importing Notification Schema
+const Notification = require('./server/models/Notification');
+
 app.use("/api/v1", require("./server/routes/api/v1"));
 app.use(require("./server/routes/index"));
 
@@ -68,13 +72,18 @@ const io = soketIo(server);
 
 io.on('connection', (socket) => {
 	console.log('User connected');
-	socket.on('notifications', (notification) => {
-		const { dueDate } = notification;
-		const crtTS = +new Date(dueDate);
 
+	socket.on('notifications', (notification) => {
+		const { cardName, dueDate, userId, boardId, listId } = notification;
+		const crtTS = +new Date(dueDate);
+		console.log(notification, 'checking notification');
+		// On connection start pushing notifications to database
 		const pushNotification = setTimeout(() => {
+
+			const notifi = notify.notifyMe
+			console.log(notifi, 'checking notifi function');
 			io.emit('notifications', notification)
-		}, Math.abs(crtTS - (+new Date())))
+		}, Math.abs(crtTS - (+new Date())))	
 	})
 	socket.on('disconnect', () => {
 		console.log('User disconnected');
