@@ -23,7 +23,7 @@ const actions = {
             type: 'CREATE_USER_FAIL',
             error: user.error
           })
-          cb(false)
+          cb(false, user.error)
         }
       })
     }

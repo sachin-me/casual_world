@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import actions from '../store/actions';
 import helperFunctions from "../utility";
+import commonComponents from "./CommonComponents";
+
+let {validateEmail, validatePassword, toProperCase} = helperFunctions;
+let { InputBox, Message, SubmitButton } = commonComponents;
 
 class Signup extends Component {
   state = {
@@ -25,8 +29,8 @@ class Signup extends Component {
 	validateEmailPassword = () => {
 		let { email, password } = this.state;
 		this.setState({
-			validEmail: helperFunctions.validateEmail(email),
-			validPassword: helperFunctions.validatePassword(password)
+			validEmail: validateEmail(email),
+			validPassword: validatePassword(password)
 		})
 	}
 
@@ -34,40 +38,25 @@ class Signup extends Component {
     e.preventDefault();
     const { name, email, password, validEmail, validPassword } = this.state;
 		
-		if (validEmail && validPassword) {
+		if (validateEmail(email) && validatePassword(password)) {
 			const data = { name, email, password };
-			if (name.length == 0 && email.length == 0 && password.length == 0) return this.setState({
-				message: 'Please fill the form'
-			})
-			this.props.dispatch(actions.createUser(data, success => {
-				if (success) {
-					const { message } = this.props;
-					this.setState({
-						message: message,
-						name: '',
-						email: '',
-						password: ''
-					})
-					this.props.history.push('/login');
-				} else {
-					const { error } = this.props;
-					if (error !== 'undefined') {
-						this.setState({
-							error: error,
-							name: '',
-							email: '',
-							password: ''
-						})
-						this.props.history.push('/signup');
-					}
-				}
-			}));
+			this.props.dispatch(actions.createUser(data, this.handleSubmitReturn));
 		} else {
 			this.setState({
 				error: 'Email or Password is invalid'
 			})
 		}
-  }
+	}
+	
+	handleSubmitReturn = (success, error) => {
+		if (success) {
+			this.props.history.push('/login');
+		} else {
+			this.setState({
+				error: error
+			})
+		}
+	};
 
   render() {
 		const { name, email, password, message, error, validEmail, validPassword } = this.state;
@@ -77,46 +66,12 @@ class Signup extends Component {
           <h3 className='center'>Create an account</h3>
         </div>
         <form onSubmit={this.handleSubmit}>
-          <div className="field">
-            <label className="label">Name</label>
-            <div className="control">
-              <input className="input" type="text" name='name' placeholder="enter your name" value={name} onChange={this.handleChane} />
-            </div>
-          </div>
-          <div className="field">
-            <label className="label">Email</label>
-            <div className="control has-icons-left has-icons-right">
-              <input className={"input " + validEmail} onBlur={this.validateEmailPassword} type="email" name='email' placeholder="Email input" value={email} onChange={this.handleChane} />
-              <span className="icon is-small is-left">
-                <i className="fas fa-envelope"></i>
-              </span>
-              <span className="icon is-small is-right">
-                <i className="fas fa-exclamation-triangle"></i>
-              </span>
-            </div>
-          </div>
-          <div className="field">
-            <label className="label">Password</label>
-            <p className="control has-icons-left">
-              <input className={"input " + validPassword} onBlur={this.validateEmailPassword} type="password" name='password' placeholder="Password" value={password} onChange={this.handleChane} />
-              <span className="icon is-small is-left">
-                <i className="fas fa-lock"></i>
-              </span>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control">
-              <button className="button is-primary">
-                Signup
-              </button>
-            </p>
-          </div>
+					<InputBox name="name" type="text" placeholder="Enter the name" handleChange={this.handleChane}/>
+          <InputBox name="email" type="text" placeholder="Enter the email" handleChange={this.handleChane}onBlur={this.validateEmailPassword}/>  
+          <InputBox name="password" type="password" placeholder="Enter the password" handleChange={this.handleChane}onBlur={this.validateEmailPassword}/>
+          <SubmitButton text="Sign up" />
         </form>
-        <div className="signup-status center has-text-danger">
-          {
-            (message && message != 'undefined') ? message : error
-          }
-        </div>
+        <Message message={message} error={error}/>
         <div className="goto-login center">
           <span>Already has an account, </span><Link to='/login'>login?</Link>
         </div>

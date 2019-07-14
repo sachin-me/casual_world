@@ -6,6 +6,13 @@ const helperFunctions = {
 	validatePassword: (password) => {
 		const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/;
 		return pattern.test(password);
+	},
+	toProperCase: (name) => {
+		const re = /(?![a-z]{1,})/g;
+		return name
+						.split(re)
+						.map(word=>word[0].toUpperCase() + word.substr(1))
+						.join(" ");
 	}
 }
 
