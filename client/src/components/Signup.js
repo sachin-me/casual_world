@@ -39,14 +39,14 @@ class Signup extends Component {
     e.preventDefault();
     const { name, email, password, validEmail, validPassword } = this.state;
 		
-		if (validateEmail(email) && validatePassword(password)) {
+		// if (validateEmail(email) && validatePassword(password)) {
 			const data = { name, email, password };
 			this.props.dispatch(actions.createUser(data, this.handleSubmitReturn));
-		} else {
-			this.setState({
-				error: 'Email or Password is invalid'
-			})
-		}
+		// } else {
+			// this.setState({
+			// 	error: 'Email or Password is invalid'
+			// })
+		// }
 	}
 	
 	handleSubmitReturn = (success, error) => {

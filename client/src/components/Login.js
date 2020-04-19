@@ -37,15 +37,15 @@ class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
 
-    if (validateEmail(email) && validatePassword(password)) {
+    // if (validateEmail(email) && validatePassword(password)) {
       const data = { email, password }
 
       this.props.dispatch(actions.loginUser(data, this.handleSubmitReturn))
-    } else {
-      this.setState({
-        error: 'Email or Password is invalid'
-      })
-    }
+    // } else {
+      // this.setState({
+      //   error: 'Email or Password is invalid'
+      // })
+    // }
   }
 
   handleSubmitReturn = (success, error) => {

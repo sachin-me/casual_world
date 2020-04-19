@@ -11,11 +11,13 @@ const soketIo = require('socket.io');
 const http = require('http');
 const bt = require('big-time');
 const notify = require('./server/util');
+var logger = require('morgan');
+var env = require('dotenv').config();
 
-const port = 8000;
+const port = process.env.PORT;
 
 mongoose.connect(
- "mongodb://localhost/casualworld",
+ process.env.MONGODB_URI,
  { useNewUrlParser: true },
  function(err, connection) {
   if (err) throw err;
@@ -23,6 +25,7 @@ mongoose.connect(
  }
 )
 
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -33,10 +36,10 @@ app.set("view engine", "ejs");
 
 app.use(
  session({
-  secret: "casualworld",
+  secret: process.env.SECRET,
   resave: true,
   saveUninitialized: true,
-  store: new MongoStore({ url: "mongodb://localhost/casualworld-session" })
+  store: new MongoStore({ url: process.env.SESSION_URI })
  })
 );
 
@@ -53,6 +56,7 @@ if (process.env.NODE_ENV === "development") {
  );
 
  app.use(require("webpack-hot-middleware")(compiler));
+ app.use(logger('dev'));
 }
 
 app.use(cors());
