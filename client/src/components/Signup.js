@@ -24,34 +24,59 @@ class Signup extends Component {
     const { value, name } = e.target;
     this.setState({
       [name]: value
-    })
+    }, () => this.validateEmailPassword());
 	}
 	
 	validateEmailPassword = () => {
-		let { email, password } = this.state;
+    let { email, password, validEmail, validPassword } = this.state;
+    
 		this.setState({
 			validEmail: validateEmail(email),
 			validPassword: validatePassword(password)
-		})
+    }, () => {
+      console.group();
+      console.log(validPassword, 'validPassword');
+      console.log(validEmail, 'validEmail');
+      console.groupEnd();
+      
+      if (email || password) {
+        if (!validEmail || validPassword) {
+          return this.setState({
+            error: '*Enter valid email address (e.g. abc@gmail.com)'
+          })
+        } else if (!validPassword || validEmail) {
+          console.log(password, 'checking password')
+          return this.setState({
+            error: '*Password must contain 4-8 characters.'
+          })
+        } else {
+          return this.setState({
+            error: ''
+          })
+        }
+      }
+     })
 	}
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password, validEmail, validPassword } = this.state;
 		
-		// if (validateEmail(email) && validatePassword(password)) {
+		if (validateEmail(email) && validatePassword(password)) {
+      console.log('inside if condition');
 			const data = { name, email, password };
 			this.props.dispatch(actions.createUser(data, this.handleSubmitReturn));
-		// } else {
-			// this.setState({
-			// 	error: 'Email or Password is invalid'
-			// })
-		// }
+		} else {
+			this.setState({
+				error: 'Email or Password is invalid'
+			})
+		}
 	}
 	
 	handleSubmitReturn = (success, error) => {
 		if (success) {
-			this.props.history.push('/login');
+      console.log('Login success');
+			// this.props.history.push('/login');
 		} else {
 			this.setState({
 				error: error
@@ -68,8 +93,8 @@ class Signup extends Component {
         </div>
         <form onSubmit={this.handleSubmit}>
 					<InputBox name="name" type="text" placeholder="Enter the name" handleChange={this.handleChange}/>
-          <InputBox name="email" type="text" placeholder="Enter the email" handleChange={this.handleChange} onBlur={this.validateEmailPassword}/>  
-          <InputBox name="password" type="password" placeholder="Enter the password" handleChange={this.handleChange} onBlur={this.validateEmailPassword}/>
+          <InputBox name="email" type="text" placeholder="Enter the email" handleChange={this.handleChange} onBlur={this.validateEmailPassword} />  
+          <InputBox name="password" type="password" placeholder="Enter the password" handleChange={this.handleChange} onBlur={this.validateEmailPassword} />
           <SubmitButton text="Sign up" />
         </form>
         <Message message={message} error={error}/>
