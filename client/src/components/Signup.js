@@ -34,20 +34,14 @@ class Signup extends Component {
 			validEmail: validateEmail(email),
 			validPassword: validatePassword(password)
     }, () => {
-      console.group();
-      console.log(validPassword, 'validPassword');
-      console.log(validEmail, 'validEmail');
-      console.groupEnd();
-      
       if (email || password) {
-        if (!validEmail || validPassword) {
+        if (email && !validEmail) {
           return this.setState({
             error: '*Enter valid email address (e.g. abc@gmail.com)'
           })
-        } else if (!validPassword || validEmail) {
-          console.log(password, 'checking password')
+        } if (password && !validPassword) {
           return this.setState({
-            error: '*Password must contain 4-8 characters.'
+            error: '*Password must contain 4-8 characters and at least One Uppercase letter and one numeric value.'
           })
         } else {
           return this.setState({
@@ -63,7 +57,6 @@ class Signup extends Component {
     const { name, email, password, validEmail, validPassword } = this.state;
 		
 		if (validateEmail(email) && validatePassword(password)) {
-      console.log('inside if condition');
 			const data = { name, email, password };
 			this.props.dispatch(actions.createUser(data, this.handleSubmitReturn));
 		} else {
@@ -75,8 +68,7 @@ class Signup extends Component {
 	
 	handleSubmitReturn = (success, error) => {
 		if (success) {
-      console.log('Login success');
-			// this.props.history.push('/login');
+			this.props.history.push('/login');
 		} else {
 			this.setState({
 				error: error
@@ -92,9 +84,9 @@ class Signup extends Component {
           <h3 className='center'>Create an account</h3>
         </div>
         <form onSubmit={this.handleSubmit}>
-					<InputBox name="name" type="text" placeholder="Enter the name" handleChange={this.handleChange}/>
-          <InputBox name="email" type="text" placeholder="Enter the email" handleChange={this.handleChange} onBlur={this.validateEmailPassword} />  
-          <InputBox name="password" type="password" placeholder="Enter the password" handleChange={this.handleChange} onBlur={this.validateEmailPassword} />
+					<InputBox name="name" type="text" placeholder="Name" handleChange={this.handleChange}/>
+          <InputBox name="email" type="text" placeholder="Email" handleChange={this.handleChange} onBlur={this.validateEmailPassword} />  
+          <InputBox name="password" type="password" placeholder="Password" handleChange={this.handleChange} onBlur={this.validateEmailPassword} />
           <SubmitButton text="Sign up" />
         </form>
         <Message message={message} error={error}/>
