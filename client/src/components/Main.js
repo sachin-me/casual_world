@@ -24,17 +24,21 @@ class Main extends Component {
 						<Switch>
 							{
 								token ? (
-									<Route exact path='/' component={Dashboard} />
+									<>
+										<Route exact path='/' component={Dashboard} />
+										<Route exact path='/:id/profile' component={UserProfile} />
+										<Route exact path='/:id/createboard' component={CreateNewBoard} />
+										<Route exact path='/:id/getboards' component={BoardLists} />
+										<Route exact path='/:userid/board/:boardid' component={Board} />
+									</>
 								) : (
-									<Route exact path='/' component={Header} />
+									<>
+										<Route exact path='/' component={Header} />
+										<Route exact path='/login' component={Login} />
+										<Route exact path='/signup' component={Signup} />
+									</>
 								)
 							}
-							<Route exact path='/login' component={Login} />
-							<Route exact path='/signup' component={Signup} />
-							<Route exact path='/:id/profile' component={UserProfile} />
-							<Route exact path='/:id/createboard' component={CreateNewBoard} />
-							<Route exact path='/:id/getboards' component={BoardLists} />
-							<Route exact path='/:userid/board/:boardid' component={Board} />
 						</Switch>
 					</>
         </Router>
