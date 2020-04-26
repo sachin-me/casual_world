@@ -15,21 +15,39 @@ class Login extends Component {
     email: '',
     password: '',
     message: '',
-    error: ''
+    error: '',
+    validEmail: true,
+    validPassword: true
   }
 
   handleChange = (e) => {
     const { value, name } = e.target;
     this.setState({
       [name]: value
-    })
+    }, () => this.validateEmailPassword())
   }
 
   validateEmailPassword = () => {
-    let { email, password } = this.state;
+    let { email, password, validEmail, validPassword } = this.state;
     this.setState({
       validEmail: validateEmail(email),
       validPassword: validatePassword(password)
+    }, () => {
+      if (email || password) {
+        if (email && !validEmail) {
+          return this.setState({
+            error: '*Enter valid email address (e.g. abc@gmail.com)'
+          })
+        } if (password && !validPassword) {
+          return this.setState({
+            error: '*Password must contain 4-8 characters and at least One Uppercase letter and one numeric value.'
+          })
+        } else {
+          return this.setState({
+            error: ''
+          })
+        }
+      }
     })
   }
 
@@ -37,15 +55,15 @@ class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
 
-    // if (validateEmail(email) && validatePassword(password)) {
+    if (validateEmail(email) && validatePassword(password)) {
       const data = { email, password }
 
       this.props.dispatch(actions.loginUser(data, this.handleSubmitReturn))
-    // } else {
-      // this.setState({
-      //   error: 'Email or Password is invalid'
-      // })
-    // }
+    } else {
+      this.setState({
+        error: 'Email or Password is invalid'
+      })
+    }
   }
 
   handleSubmitReturn = (success, error) => {
