@@ -6,6 +6,7 @@ const cardController = require('../../controllers/card.controller');
 
 router.post('/createUser', userController.createUser);
 router.post('/loginuser', userController.loginUser);
+router.get('/me', userController.getCurrentUser);
 
 // Creating new board
 router.post('/:id/createboard', boardController.createBoard);

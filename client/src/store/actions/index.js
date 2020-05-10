@@ -1,4 +1,4 @@
-const uri = 'http://localhost:8000/api/v1'
+const uri = '/api/v1'
 
 const actions = {
   createUser: (data, cb) => {

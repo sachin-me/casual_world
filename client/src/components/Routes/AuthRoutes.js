@@ -5,8 +5,10 @@ import UserProfile from '../UserProfile';
 import CreateNewBoard from '../CreateNewBoard';
 import BoardLists from '../BoardLists';
 import Board from '../Board';
+import api from '../../utility/api';
 
 function AuthRoutes() {
+  api.getCurrentUser();
   return (
     <>
       <Route exact path="/" component={Dashboard} />

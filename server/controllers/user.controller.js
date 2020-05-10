@@ -65,5 +65,21 @@ module.exports = {
         }
       })
     })(req, res, next);
+  },
+
+  // get current login user
+  getCurrentUser: async (req, res, next) => {
+    const { id } = req.headers;
+    const user = await User.findOne({ _id: id }).select('-password').populate('boards');
+    if (!user) {
+      return res.json({
+        error: 'No User Found'
+      })
+    } else {
+      return res.json({
+        message: 'User found, Successfully',
+        user
+      })
+    }
   }
 }
