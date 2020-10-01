@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import Footer from './Footer';
+import banner from '../images/banner.svg';
 
 class Header extends Component {
   render() {
@@ -29,14 +30,14 @@ class Header extends Component {
                 </Link>
               </div>
               <div className="column">
-                <img className="image is-256x256" src={require('../images/banner.svg')} />
+                <img className="image is-256x256" src={banner} />
               </div>
             </div>
           </div>
-					<div>
-						<Footer />
-					</div>
-        </section>  
+          <div>
+            <Footer />
+          </div>
+        </section>
       </>
     );
   }

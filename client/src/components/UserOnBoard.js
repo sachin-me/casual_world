@@ -5,6 +5,7 @@ import UserBoard from './UserBoard';
 import HomeIcon from '../containers/HomeIcon';
 import CreateBoard from './CreateBoard';
 import actions from '../store/actions';
+import noContent from '../images/no-content.svg';
 
 class UserOnBoard extends Component {
 	state = {
@@ -42,7 +43,7 @@ class UserOnBoard extends Component {
         <div className='column is-one-third'>
           <div className='image-info'>
             <figure className='image'>
-              <img src={require('../images/no-content.svg')} />
+              <img src={noContent} />
             </figure>
             <h4>Stay on track and up to date</h4>
             <p>Invite people to boards and cards, add due dates, and we'll show the most important activity here.</p>

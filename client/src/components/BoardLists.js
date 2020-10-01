@@ -23,7 +23,7 @@ class BoardLists extends Component {
 
 	handleUpdate = (boardId) => {
 		const { openInputBox } = this.state;
-		let checkId = [...openInputBox, boardId]
+		let checkId = [...openInputBox, boardId];
 		let lastArr = checkId.filter((val, index, arr) => arr.indexOf(val) === index);
 		this.setState({
 			isOpen: true,
