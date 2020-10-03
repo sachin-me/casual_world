@@ -11,7 +11,6 @@ class CreateCard extends Component {
 		cardName: '',
 		dueDate: '',
 		currentDate: new Date(),
-		userId: this.props.currentUser.id,
 		boardId: this.props.board._id,
 		listId: this.props.listId
 	}
@@ -25,7 +24,6 @@ class CreateCard extends Component {
 
 		e.preventDefault();
 
-		const { currentUser } = this.props;
 		const { cardName, dueDate, boardId, listId } = this.state;
 
 		if (!cardName || !dueDate) return
@@ -33,7 +31,7 @@ class CreateCard extends Component {
 		const data = { cardName, dueDate }
 		console.log(this.state)
 		// socket.emit('notifications', this.state);
-		this.props.dispatch(actions.createCard(this.state, currentUser.id, boardId, listId, success => {
+		this.props.dispatch(actions.createCard(this.state, boardId, listId, success => {
 			if (success) {
 				this.props.dispatch(actions.getCards(listId))
 				this.props.dispatch(actions.getAllCards(boardId));
@@ -90,7 +88,6 @@ function getTodayDate(date) {
 
 const mapStateToProps = (state) => {
 	return {
-		currentUser: state.currentUser || {},
 		board: state.board || {}
 	}
 }

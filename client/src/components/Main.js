@@ -6,17 +6,18 @@ import PublicRoutes from './Routes/PublicRoutes';
 import AuthRoutes from './Routes/AuthRoutes';
 
 class Main extends Component {
-  render() {
-		const { currentToken } = this.props;
-		const token = currentToken.split('Bearer')[1];
-    return (
-      <div className='route-wrapper'>
-        <Router>
+	render() {
+		const { currentUser } = this.props;
+		const id = currentUser._id;
+		
+		return (
+			<div className='route-wrapper'>
+				<Router>
 					<>
 						<Navbar />
 						<Switch>
 							{
-								token ? (
+								id ? (
 									<AuthRoutes />
 								) : (
 									<PublicRoutes />
@@ -24,16 +25,15 @@ class Main extends Component {
 							}
 						</Switch>
 					</>
-        </Router>
-      </div>
-    );
-  }
+				</Router>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {
 	return {
 		currentUser: state.currentUser,
-		currentToken: state.currentToken || ''
 	}
 }
 

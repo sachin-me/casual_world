@@ -9,16 +9,12 @@ class BoardLists extends Component {
 		openInputBox: []
 	}
 	handleClick = (boardId) => {
-		const { id } = this.props.currentUser;
-		const userId = id;
-		this.props.dispatch(actions.getSingleBoard(userId, boardId))
-		this.props.history.push(`/${userId}/board/${boardId}`)
+		this.props.dispatch(actions.getSingleBoard(boardId))
+		this.props.history.push(`/board/${boardId}`)
 	}
 
 	handleDelete = (boardId) => {
-		const { id } = this.props.currentUser;
-		const userId = id;
-		this.props.dispatch(actions.deleteBoard(userId, boardId));
+		this.props.dispatch(actions.deleteBoard(boardId));
 	}
 
 	handleUpdate = (boardId) => {
@@ -40,11 +36,9 @@ class BoardLists extends Component {
 
 	handleSubmit = (e, boardId) => {
 		e.preventDefault();
-		const { id } = this.props.currentUser;
 		const { boardName } = this.state;
 		const data = { boardName };
-		const userId = id;
-		this.props.dispatch(actions.updateBoard(userId, boardId, data, success => {
+		this.props.dispatch(actions.updateBoard(boardId, data, success => {
 			if (success) {
 				this.setState({
 					isOpen: false
@@ -63,8 +57,7 @@ class BoardLists extends Component {
 	}
 
 	componentDidMount = () => {
-		const { id } = this.props.currentUser;
-		this.props.dispatch(actions.getBoards(id));
+		this.props.dispatch(actions.getBoards());
 	}
 	render() {
 		const { boards } = this.props;
@@ -72,7 +65,7 @@ class BoardLists extends Component {
 		return (
 			<div>
 				{
-					boards ? boards.map((board) => {
+					boards.length !== 0 ? boards.map((board) => {
 						return (
 							<div key={board._id} className='board-card'>
 								{
@@ -97,7 +90,7 @@ class BoardLists extends Component {
 								}
 							</div>
 						)
-					}) : <div>Oops, no board found!</div>
+					}) : <div className='main-loader'>Oops, no board found!</div>
 				}
 			</div>
 		);
@@ -107,7 +100,6 @@ class BoardLists extends Component {
 const mapStateToProps = (state) => {
 	return {
 		boards: state.boards || [],
-		currentUser: state.currentUser || {},
 	}
 }
 
