@@ -55,21 +55,6 @@ module.exports = {
       const token = jwt.sign({
         id
       }, 'secret');
-
-      res.cookie(
-        "username",
-        name + "," + email,
-        {
-          expires: new Date(Date.now() + 84000000),
-          httpOnly: true,
-        }
-      );
-
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 84000000),
-        httpOnly: true,
-      });
-
       res.json({
         message: `${name}, Successfully logged in`,
         token,
@@ -84,19 +69,16 @@ module.exports = {
 
   // get current login user
   getCurrentUser: async (req, res, next) => {
-    const token = req.cookies.token;
-		const user = jwt.verify(token, 'secret');
-    const { id } = user;
-    
-    const currentUser = await User.findOne({ _id: id }).select('-password -boards')
-    if (!currentUser) {
+    const { id } = req.headers;
+    const user = await User.findOne({ _id: id }).select('-password').populate('boards');
+    if (!user) {
       return res.json({
         error: 'No User Found'
       })
     } else {
       return res.json({
         message: 'User found, Successfully',
-        currentUser
+        user
       })
     }
   }
