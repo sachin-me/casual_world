@@ -19,10 +19,9 @@ class Board extends Component {
 		})
 	}
 	componentDidMount = () => {
-		const { currentUser, match } = this.props;
-		const userId = currentUser.id;
+		const { match } = this.props;
 		const boardId = match.params.boardid;
-		this.props.dispatch(actions.getSingleBoard(userId, boardId));
+		this.props.dispatch(actions.getSingleBoard(boardId));
 		this.props.dispatch(actions.getLists(boardId));
 		this.props.dispatch(actions.getAllCards(boardId));
 	}
@@ -34,7 +33,7 @@ class Board extends Component {
 				<div>
 					{
 						Object.keys(board).length ? (
-							<div>{board.boardName}</div>
+							<div style={{ marginTop: '20px', marginLeft: '20px', }}>{board.boardName}</div>
 						) : null
 					}
 				</div>
@@ -62,7 +61,6 @@ class Board extends Component {
 const mapStateToProps = (state) => {
 	return {
 		board: state.board,
-		currentUser: state.currentUser
 	}
 }
 

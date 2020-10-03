@@ -5,7 +5,6 @@ import actions from '../store/actions';
 class CreateNewBoard extends Component {
 	state = {
 		boardName: '',
-		userId: this.props.currentUser.id
 	}
 	handleChange = (e) => {
 		const { name, value } = e.target;
@@ -15,11 +14,11 @@ class CreateNewBoard extends Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
-		const { boardName, userId } = this.state;
-		const data = { boardName, userId }
-		this.props.dispatch(actions.createBoard(data, userId, success => {
+		const { boardName } = this.state;
+		const data = { boardName }
+		this.props.dispatch(actions.createBoard(data, success => {
 			if (success) {
-				this.props.history.push(`/${userId}/getboards`);
+				this.props.history.push(`/getboards`);
 			} else {
 				this.props.history.push('/');
 			}
@@ -38,10 +37,4 @@ class CreateNewBoard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-	return {
-		currentUser: state.currentUser || {}
-	}
-}
-
-export default connect(mapStateToProps)(CreateNewBoard);
+export default connect(null)(CreateNewBoard);

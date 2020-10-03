@@ -1,8 +1,7 @@
 const initState = {
   message: '',
   error: '',
-  currentUser: JSON.parse(localStorage.getItem('user')) || null,
-	currentToken: localStorage.getItem('token') || null,
+  currentUser: {},
 	list: {},
 	allLists: [],
 	board: {},
@@ -31,7 +30,6 @@ function rootReducer (state = initState, action) {
       return {
         ...state,
         currentUser: action.user,
-        currentToken: action.token,
         message: action.message,
         // user: action.user
       }
