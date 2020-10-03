@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 class CreateBoard extends Component {
   render() {
+		const { currentUser } = this.props;
     return (
       <>
-				<Link to={`/createboard`}>
+				<Link to={`/${currentUser.id}/createboard`}>
         	<div className='hover' onClick={this.handleClick}>+<span>Create a project</span></div>
 				</Link>
       </>
@@ -14,5 +15,10 @@ class CreateBoard extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+	return {
+		currentUser: state.currentUser || {}
+	}
+}
 
-export default CreateBoard;
+export default connect(mapStateToProps)(CreateBoard);

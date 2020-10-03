@@ -1,4 +1,3 @@
-const JWT = require('jsonwebtoken');
 const Card = require('../models/Card');
 const List = require('../models/List');
 const Board = require('../models/Board');
@@ -8,14 +7,10 @@ const Notification = require('../models/Notification');
 module.exports = {
 	createCard: (req, res) => {
 		const { cardName, dueDate } = req.body;
-
 		const listId = req.params.listid;
-		const token = req.cookies.token;
-		const user = JWT.verify(token, 'secret');
-		console.log(user, 'getting user in get boards');
-		const { id } = user;
+		const userId = req.params.userid;
 
-		User.findById(id, (err, user) => {
+		User.findById(userId, (err, user) => {
 
 			const newCard = new Card({
 				cardName,
