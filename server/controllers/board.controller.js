@@ -1,10 +1,14 @@
 const Board = require('../models/Board');
 const User = require('../models/User');
+const JWT = require('jsonwebtoken');
 
 module.exports = {
 	createBoard: (req, res) => {
 		const { boardName } = req.body;
-		const userId = req.params.id;
+		const token = req.cookies.token;
+		const user = JWT.verify(token, 'secret');
+		const { id } = user;
+		
 		const newBoard = new Board({
 			boardName
 		})
@@ -12,7 +16,7 @@ module.exports = {
 			if (err) return res.json({
 				error: 'Could not create board'
 			})
-			User.findByIdAndUpdate(userId, {
+			User.findByIdAndUpdate(id, {
 				$push: {
 					boards: board._id
 				}
@@ -30,14 +34,17 @@ module.exports = {
 
 	// getting boards
 	getBoards: (req, res) => {
-		const userId = req.params.id;
-		if (!userId) {
+		const token = req.cookies.token;
+		const user = JWT.verify(token, 'secret');
+		const { id } = user;
+
+		if (!id) {
 			return res.json({
 				error: 'No user found.'
 			})
 		}
-		// console.log(userId, 'checking user id');
-		User.findById(userId).populate('boards').exec((err, boards) => {
+		// console.log(id, 'checking user id');
+		User.findById(id).populate('boards').exec((err, boards) => {
 			if (err) return res.json({
 				error: 'Could not get boards'
 			})
@@ -51,8 +58,11 @@ module.exports = {
 	// getting single board
 	getSingleBoard: (req, res) => {
 		let boardId = req.params.boardid;
-		let userId = req.params.userid;
-		User.findById(userId, (err, user) => {
+		const token = req.cookies.token;
+		const user = JWT.verify(token, 'secret');
+		const { id } = user;
+
+		User.findById(id, (err, user) => {
 			Board.findById(boardId).populate('lists').exec((err, board) => {
 				if (err) return res.json({
 					error: 'Could not get board'
@@ -68,12 +78,15 @@ module.exports = {
 	// Deleting a particular board
 	deleteBoard: (req, res) => {
 		let boardId = req.params.boardid;
-		let userId = req.params.userid;
+		const token = req.cookies.token;
+		const user = JWT.verify(token, 'secret');
+		const { id } = user;
+
 		Board.findOneAndDelete(boardId, (err, board) => {
 			if (err) return res.json({
 				error: 'Could not delete board'
 			})
-			User.findOneAndUpdate({ _id: userId }, {
+			User.findOneAndUpdate({ _id: id }, {
 				$pull: {
 					boards: board._id
 				}

@@ -74,12 +74,13 @@ const actions = {
 		cb(true)
 	},
 	
-	createBoard: (data, userId, cb) => dispatch => {
-		fetch(`${uri}/${userId}/createboard`, {
+	createBoard: (data, cb) => dispatch => {
+		fetch(`${uri}/createboard`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
+			credentials: 'same-origin', // send cookies
 			body: JSON.stringify(data)
 		})
 		.then(res => res.json())
@@ -102,12 +103,13 @@ const actions = {
 	},
 
 	// getting boards
-	getBoards: (userId) => dispatch => {
-		fetch(`${uri}/${userId}/getboards`, {
+	getBoards: () => dispatch => {
+		fetch(`${uri}/getboards`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
-			}
+			},
+			credentials: 'same-origin', // send cookies
 		})
 		.then(res => res.json())
 		.then(boards => {
@@ -126,8 +128,8 @@ const actions = {
 	},
 
 	// Getting single board
-	getSingleBoard: (userId, boardId) => dispatch => {
-		fetch(`${uri}/${userId}/board/${boardId}`, {
+	getSingleBoard: (boardId) => dispatch => {
+		fetch(`${uri}/board/${boardId}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -150,8 +152,8 @@ const actions = {
 	},
 
 	// Deleting a particular board
-	deleteBoard: (userId, boardId) => dispatch => {
-		fetch(`${uri}/${userId}/board/${boardId}/delete`, {
+	deleteBoard: (boardId) => dispatch => {
+		fetch(`${uri}/board/${boardId}/delete`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
@@ -174,8 +176,8 @@ const actions = {
 	},
 
 	// updating a particular board
-	updateBoard: (userId, boardId, data, cb) => dispatch => {
-		fetch(`${uri}/${userId}/board/${boardId}/update`, {
+	updateBoard: (boardId, data, cb) => dispatch => {
+		fetch(`${uri}/board/${boardId}/update`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
@@ -301,8 +303,8 @@ const actions = {
 	},
 
 	// Creating new card
-	createCard: (data, userId, boardId, listId, cb) => dispatch => {
-		fetch(`${uri}/${userId}/board/${boardId}/list/${listId}/createcard`, {
+	createCard: (data, boardId, listId, cb) => dispatch => {
+		fetch(`${uri}/board/${boardId}/list/${listId}/createcard`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
