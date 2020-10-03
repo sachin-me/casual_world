@@ -31,7 +31,7 @@ class Navbar extends Component {
 	render() {
 		const { notifications } = this.state;
 		const { currentUser } = this.props;
-		const userId = currentUser.id || ''
+		const userId = currentUser._id || ''
 		return (
 			<div>
 				<nav className="navbar" role="navigation" aria-label="main navigation">
@@ -42,7 +42,7 @@ class Navbar extends Component {
 								</Link>
                 {
                   userId ? (
-                    <Link to={`/${userId}/getboards`} className="navbar-item is-light">
+                    <Link to={`/getboards`} className="navbar-item is-light">
                       <UserBoard />
                     </Link>
                   ) : <div></div>
@@ -59,7 +59,7 @@ class Navbar extends Component {
                         <Notification />
 												<span>{notifications ? notifications.length: ''}</span>
                       </a>
-                      <Link to={`/${userId}/profile`} className="navbar-item is-light">
+                      <Link to={`/profile`} className="navbar-item is-light">
                         <Profile />
                       </Link>
                     </>

@@ -82,7 +82,7 @@ class Lists extends Component {
 		const { getAllCards, allLists, boardId } = this.props;
 		const { openInputBox, isOpen, openListBox, listName } = this.state;
 		
-		let filterCard = getAllCards.filter(list1 => allLists.some(list2 => list1._id === list2._id));
+		let filterCard = getAllCards.filter(list1 => allLists && allLists.some(list2 => list1._id === list2._id));
 		return (
 			<>
 				{

@@ -12,6 +12,7 @@ const http = require('http');
 const bt = require('big-time');
 const notify = require('./server/util');
 var logger = require('morgan');
+const cookieParser = require('cookie-parser'); 
 var env = require('dotenv').config();
 
 const port = process.env.PORT;
@@ -28,6 +29,7 @@ mongoose.connect(
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "public")));
 

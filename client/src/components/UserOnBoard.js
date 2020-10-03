@@ -8,21 +8,16 @@ import actions from '../store/actions';
 import noContent from '../images/no-content.svg';
 
 class UserOnBoard extends Component {
-	state = {
-		userId: this.props.currentUser.id
-	}
+	
 	componentDidMount = () => {
-		const { userId } = this.state;
-		this.props.dispatch(actions.getBoards(userId));
+		this.props.dispatch(actions.getBoards());
 	}
   render() {
-		const { currentUser } = this.props;
-		const userId = currentUser.id || ''
     return (
       <div className='columns column-wrapper'>
         <div className='column is-one-third'>
           <div className='hover'>
-						<Link to={`/${userId}/getboards`}>
+						<Link to={`/getboards`}>
             	<UserBoard />
 						</Link>
           </div>
@@ -58,10 +53,4 @@ class UserOnBoard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-	return {
-		currentUser: state.currentUser || {}
-	}
-}
-
-export default connect(mapStateToProps)(UserOnBoard);
+export default connect(null)(UserOnBoard);
