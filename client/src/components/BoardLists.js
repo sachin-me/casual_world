@@ -8,9 +8,9 @@ class BoardLists extends Component {
 		boardName: '',
 		openInputBox: []
 	}
-	handleClick = (boardId) => {
-		this.props.dispatch(actions.getSingleBoard(boardId))
-		this.props.history.push(`/board/${boardId}`)
+	handleClick = (slug) => {
+		this.props.dispatch(actions.getSingleBoard(slug))
+		this.props.history.push(`/board/${slug}`)
 	}
 
 	handleDelete = (boardId) => {
@@ -78,7 +78,7 @@ class BoardLists extends Component {
 										</>
 									) : (
 										<>
-											<span onClick={() => this.handleClick(board._id)}>{board.boardName}</span>
+											<span onClick={() => this.handleClick(board.slug)}>{board.boardName}</span>
 											<span className='edit-icon' onClick={() => this.handleUpdate(board._id)} >
 												<i className="fas fa-pencil-alt"></i>
 											</span>

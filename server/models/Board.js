@@ -4,7 +4,8 @@ const slug = require('slug');
 const Schema = mongoose.Schema;
 const BoardSchema = new Schema({
 	boardName: { type: String , required: true},
-	lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
+	lists: [{type: Schema.Types.ObjectId, ref: 'List'}],
+	slug: { type: String, unique: true }
 })
 
 BoardSchema.pre('save', function(next) {

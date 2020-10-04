@@ -25,6 +25,7 @@ class CreateCard extends Component {
 		e.preventDefault();
 
 		const { cardName, dueDate, boardId, listId } = this.state;
+		const { slug } = this.props.board;
 
 		if (!cardName || !dueDate) return
 
@@ -34,7 +35,7 @@ class CreateCard extends Component {
 		this.props.dispatch(actions.createCard(this.state, boardId, listId, success => {
 			if (success) {
 				this.props.dispatch(actions.getCards(listId))
-				this.props.dispatch(actions.getAllCards(boardId));
+				this.props.dispatch(actions.getAllCards(slug));
 			}
 		}))
 		this.setState({
