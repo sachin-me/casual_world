@@ -57,13 +57,13 @@ module.exports = {
 
 	// getting single board
 	getSingleBoard: (req, res) => {
-		let boardId = req.params.boardid;
+		let boardSlug = req.params.slug;
 		const token = req.cookies.token;
 		const user = JWT.verify(token, 'secret');
 		const { id } = user;
 
 		User.findById(id, (err, user) => {
-			Board.findById(boardId).populate('lists').exec((err, board) => {
+			Board.findOne({ slug: boardSlug }).populate('lists').exec((err, board) => {
 				if (err) return res.json({
 					error: 'Could not get board'
 				})

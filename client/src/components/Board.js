@@ -20,10 +20,11 @@ class Board extends Component {
 	}
 	componentDidMount = () => {
 		const { match } = this.props;
-		const boardId = match.params.boardid;
-		this.props.dispatch(actions.getSingleBoard(boardId));
-		this.props.dispatch(actions.getLists(boardId));
-		this.props.dispatch(actions.getAllCards(boardId));
+		const { slug } = match.params;
+
+		this.props.dispatch(actions.getSingleBoard(slug));
+		this.props.dispatch(actions.getLists(slug));
+		this.props.dispatch(actions.getAllCards(slug));
 	}
 	render() {
 		const { board } = this.props;
@@ -37,22 +38,26 @@ class Board extends Component {
 						) : null
 					}
 				</div>
-				<div className='create-list-wrapper'>
-					<Lists boardId={board._id} />
-					<div>
-						{
-							isOpen ? (
-								<div className='is-open'>
-									<div><CreateList /></div><span className='close-btn' onClick={this.handleClose}>x</span>
-								</div>
-							) : (
-								<div onClick={this.handleClick} className='add-list'>
-									+ <span>Add a task</span>
-								</div>
-							)
-						}
-					</div>
-				</div>
+				{
+					Object.keys(board).length !== 0 ? (
+						<div className='create-list-wrapper'>
+							<Lists boardId={board._id} boardSlug={board.slug} />
+							<div>
+								{
+									isOpen ? (
+										<div className='is-open'>
+											<div><CreateList /></div><span className='close-btn' onClick={this.handleClose}>x</span>
+										</div>
+									) : (
+											<div onClick={this.handleClick} className='add-list'>
+												+ <span>Add a task</span>
+											</div>
+										)
+								}
+							</div>
+						</div>
+					) : null
+				}
 			</>
 		);
 	}

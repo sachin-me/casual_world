@@ -10,7 +10,8 @@ class Lists extends Component {
 		listName: '',
 		openInputBox: [],
 		openListBox: [],
-		boardId: this.props.boardId
+		boardId: this.props.boardId,
+		boardSlug: this.props.boardSlug
 	}
 
 	handleClick = (id) => {
@@ -74,14 +75,15 @@ class Lists extends Component {
 	}
 
 	componentDidMount = () => {
-		const { boardId } = this.state;
-		this.props.dispatch(actions.getLists(boardId));
-		this.props.dispatch(actions.getAllCards(boardId));
+		const { boardSlug } = this.state;
+
+		this.props.dispatch(actions.getLists(boardSlug));
+		this.props.dispatch(actions.getAllCards(boardSlug));
 	}
 	render() {
-		const { getAllCards, allLists, boardId } = this.props;
+		const { getAllCards, allLists, boardId, board } = this.props;
 		const { openInputBox, isOpen, openListBox, listName } = this.state;
-		
+
 		let filterCard = getAllCards.filter(list1 => allLists && allLists.some(list2 => list1._id === list2._id));
 		return (
 			<>

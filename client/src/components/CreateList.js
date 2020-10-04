@@ -16,6 +16,7 @@ class CreateList extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		const { listName, boardId } = this.state;
+		const { slug } = this.props.board;
 		if (!listName) return
 		const data = { listName, boardId }
 		this.setState({
@@ -23,8 +24,8 @@ class CreateList extends Component {
 		})
 		this.props.dispatch(actions.createList(data, boardId, success => {
 			if (success) {
-				this.props.dispatch(actions.getLists(boardId))
-				this.props.dispatch(actions.getAllCards(boardId));
+				this.props.dispatch(actions.getLists(slug))
+				this.props.dispatch(actions.getAllCards(slug));
 			}
 		}))
 	}

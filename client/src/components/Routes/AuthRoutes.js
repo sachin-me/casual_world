@@ -14,7 +14,7 @@ function AuthRoutes() {
       <Route exact path="/profile" component={UserProfile} />
       <Route exact path="/createboard" component={CreateNewBoard} />
       <Route exact path="/getboards" component={BoardLists} />
-      <Route exact path="/board/:boardid" component={Board} />
+      <Route exact path="/board/:slug" component={Board} />
     </>
   );
 }

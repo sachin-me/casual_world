@@ -39,17 +39,7 @@ module.exports = {
 					read: false
 				})
 
-				newNotification.save((err, notification) => {
-					if (err) {
-						return res.json({
-							error: 'Failed to create notification'
-						})
-					}
-					console.log(notification, 'checking notification in card controller');
-					return res.json({
-						message: 'Notification created, successfully'
-					})
-				})
+				newNotification.save();
 
 				List.findByIdAndUpdate(listId, {
 					$push: {
@@ -84,8 +74,8 @@ module.exports = {
 
 	// Getting all lists after populating cards
 	getAllCards: (req, res) => {
-		let boardId = req.params.id;
-		Board.findById(boardId, (err, board) => {
+		let boardSlug = req.params.slug;
+		Board.findOne({ slug: boardSlug }, (err, board) => {
 			if (err) return res.json({
 				error: 'Could not get board'
 			})

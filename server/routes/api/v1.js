@@ -15,7 +15,7 @@ router.post('/createboard', boardController.createBoard);
 router.get('/getboards', boardController.getBoards);
 
 // Getting single board
-router.get('/board/:boardid', boardController.getSingleBoard);
+router.get('/board/:slug', boardController.getSingleBoard);
 
 // Deleting a particular board
 router.delete('/board/:boardid/delete', boardController.deleteBoard); 
@@ -27,7 +27,7 @@ router.put('/board/:boardid/update', boardController.updateBoard);
 router.post('/board/:id/createlist', listController.createList)
 
 // Getting all lists
-router.get('/board/:id/getlists', listController.getLists)
+router.get('/board/:slug/getlists', listController.getLists)
 
 // Updating a particular list
 router.put('/board/:boardid/list/:listid/update', listController.updateList);
@@ -42,7 +42,7 @@ router.post('/board/:boardid/list/:listid/createcard', cardController.createCard
 router.get('/list/:listid/getcards', cardController.getCards);
 
 // Getting all lists after populating cards
-router.get('/board/:id/list/getallcards', cardController.getAllCards);
+router.get('/board/:slug/list/getallcards', cardController.getAllCards);
 
 // Deleting a particular card
 router.delete('/list/:listid/card/:cardid/delete', cardController.deleteCard);

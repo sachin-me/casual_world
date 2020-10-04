@@ -128,8 +128,8 @@ const actions = {
 	},
 
 	// Getting single board
-	getSingleBoard: (boardId) => dispatch => {
-		fetch(`${uri}/board/${boardId}`, {
+	getSingleBoard: (slug) => dispatch => {
+		fetch(`${uri}/board/${slug}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -228,8 +228,8 @@ const actions = {
 		})
 	},
 
-	getLists: (boardId) => dispatch => {
-		fetch(`${uri}/board/${boardId}/getlists`, {
+	getLists: (slug) => dispatch => {
+		fetch(`${uri}/board/${slug}/getlists`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -354,8 +354,8 @@ const actions = {
 	},
 
 	// Getting all lists after populating cards
-	getAllCards: (id) => dispatch => {
-		fetch(`${uri}/board/${id}/list/getallcards`, {
+	getAllCards: (slug) => dispatch => {
+		fetch(`${uri}/board/${slug}/list/getallcards`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
