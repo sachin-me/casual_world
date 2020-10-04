@@ -136,7 +136,7 @@ const actions = {
 	},
 
 	// Getting single board
-	getSingleBoard: (slug) => dispatch => {
+	getSingleBoard: (slug, cb) => dispatch => {
 		fetch(`${uri}/board/${slug}`, {
 			method: 'GET',
 			headers: {
@@ -150,11 +150,13 @@ const actions = {
 						type: 'GET_SINGLE_BOARD_SUCCESS',
 						singleBoard: board.board
 					})
+					cb(true);
 				} else {
 					dispatch({
 						type: 'GET_SINGLE_BOARD_FAIL',
 						error: board.error
 					})
+					cb(false);
 				}
 			})
 	},

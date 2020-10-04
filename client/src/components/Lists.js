@@ -81,14 +81,15 @@ class Lists extends Component {
 		this.props.dispatch(actions.getAllCards(boardSlug));
 	}
 	render() {
-		const { getAllCards, allLists, boardId, board } = this.props;
+		const { boardId, board } = this.props;
 		const { openInputBox, isOpen, openListBox, listName } = this.state;
+		
+		const { lists } = board;
 
-		let filterCard = getAllCards.filter(list1 => allLists && allLists.some(list2 => list1._id === list2._id));
 		return (
 			<>
 				{
-					filterCard && filterCard.map((list) => {
+					lists && lists.map((list) => {
 						return (
 							<div key={list._id} className='add-list list-card'>
 								{
@@ -139,8 +140,6 @@ class Lists extends Component {
 const mapStateToProps = (state) => {
 	return {
 		board: state.board || {},
-		getAllCards: state.getAllCards || [],
-		allLists: state.allLists || []
 	}
 }
 

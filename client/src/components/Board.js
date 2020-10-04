@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import CreateList from './CreateList';
 import Lists from './Lists';
 import actions from '../store/actions';
@@ -22,9 +23,12 @@ class Board extends Component {
 		const { match } = this.props;
 		const { slug } = match.params;
 
-		this.props.dispatch(actions.getSingleBoard(slug));
-		this.props.dispatch(actions.getLists(slug));
-		this.props.dispatch(actions.getAllCards(slug));
+		this.props.dispatch(actions.getSingleBoard(slug, (success => {
+			if (success) {
+				this.props.dispatch(actions.getLists(slug));
+				this.props.dispatch(actions.getAllCards(slug));
+			}
+		})));
 	}
 	render() {
 		const { board } = this.props;
@@ -35,7 +39,17 @@ class Board extends Component {
 					{
 						Object.keys(board).length ? (
 							<div style={{ marginTop: '20px', marginLeft: '20px', }}>{board.boardName}</div>
-						) : null
+						) : (
+							<div className="main-loader">
+                <Loader
+                  type="Audio"
+                  color="#00BFFF"
+                  height={50}
+                  width={50}
+                  timeout={3000} //3 secs
+                />
+              </div>
+						)
 					}
 				</div>
 				{
@@ -56,7 +70,17 @@ class Board extends Component {
 								}
 							</div>
 						</div>
-					) : null
+					) : (
+							<div className="main-loader">
+								<Loader
+									type="Audio"
+									color="#00BFFF"
+									height={50}
+									width={50}
+									timeout={3000} //3 secs
+								/>
+							</div>
+						)
 				}
 			</>
 		);
