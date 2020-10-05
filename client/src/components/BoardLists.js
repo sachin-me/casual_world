@@ -9,8 +9,13 @@ class BoardLists extends Component {
 		openInputBox: []
 	}
 	handleClick = (slug) => {
-		this.props.dispatch(actions.getSingleBoard(slug))
-		this.props.history.push(`/board/${slug}`)
+		this.props.dispatch(actions.getSingleBoard(slug, ((success) => {
+			if (success) {
+				this.props.history.push(`/board/${slug}`)
+			} else {
+				this.props.history.push(`/getboards`)
+			}
+		})))
 	}
 
 	handleDelete = (boardId) => {

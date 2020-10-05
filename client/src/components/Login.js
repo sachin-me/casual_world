@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import actions from '../store/actions';
 import helperFunctions from "../utility";
+import api from '../utility/api';
 import commonComponents from "./CommonComponents";
 
 let { validateEmail, validatePassword, toProperCase } = helperFunctions;
@@ -68,7 +69,11 @@ class Login extends Component {
 
   handleSubmitReturn = (success, error) => {
     if (success) {
-      this.props.history.push('/');
+      this.props.dispatch(api.getCurrentUser((isUser) => {
+        if (isUser) {
+          return this.props.history.push('/');
+        }
+      }))
     } else {
       this.setState({
         error: error

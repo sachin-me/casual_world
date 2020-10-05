@@ -8,7 +8,7 @@ module.exports = {
 		const token = req.cookies.token;
 		const user = JWT.verify(token, 'secret');
 		const { id } = user;
-		
+
 		const newBoard = new Board({
 			boardName
 		})
@@ -62,15 +62,13 @@ module.exports = {
 		const user = JWT.verify(token, 'secret');
 		const { id } = user;
 
-		User.findById(id, (err, user) => {
-			Board.findOne({ slug: boardSlug }).populate('lists').exec((err, board) => {
-				if (err) return res.json({
-					error: 'Could not get board'
-				})
-				return res.json({
-					message: 'Getting board, successfully',
-					board
-				})
+		Board.findOne({ slug: boardSlug }).populate('lists').exec((err, board) => {
+			if (err) return res.json({
+				error: 'Could not get board'
+			})
+			return res.json({
+				message: 'Getting board, successfully',
+				board
 			})
 		})
 	},
@@ -93,7 +91,7 @@ module.exports = {
 			}, { new: true }).populate('boards').exec((err, updatedBoard) => {
 				if (err) return res.json({
 					error: 'Could not update user'
-				})	
+				})
 				return res.json({
 					message: 'Board deleted, successfully',
 					updatedBoard: updatedBoard.boards
@@ -106,7 +104,7 @@ module.exports = {
 	updateBoard: (req, res) => {
 		let boardId = req.params.boardid;
 		const { boardName } = req.body;
-		Board.findOneAndUpdate({ _id: boardId}, {
+		Board.findOneAndUpdate({ _id: boardId }, {
 			boardName
 		}, { new: true }, (err, board) => {
 			if (err) return res.json({

@@ -85,19 +85,36 @@ module.exports = {
   // get current login user
   getCurrentUser: async (req, res, next) => {
     const token = req.cookies.token;
-		const user = jwt.verify(token, 'secret');
-    const { id } = user;
-    
-    const currentUser = await User.findOne({ _id: id }).select('-password -boards')
-    if (!currentUser) {
-      return res.json({
-        error: 'No User Found'
-      })
+    if (token) {
+      const user = jwt.verify(token, 'secret');
+      const { id } = user;
+      
+      const currentUser = await User.findOne({ _id: id }).select('-password -boards')
+      if (!currentUser) {
+        return res.json({
+          error: 'No User Found'
+        })
+      } else {
+        return res.json({
+          message: 'User found, Successfully',
+          currentUser
+        })
+      }
     } else {
       return res.json({
-        message: 'User found, Successfully',
-        currentUser
+        error: 'Token expired. Please login to continue'
       })
     }
+    
+  },
+
+  // logout current user
+  logout: async (req, res, next) => {
+    
+    res.clearCookie('token');
+    res.clearCookie('username');
+    return res.json({
+      message: 'User is logged out. Please login to continue'
+    })
   }
 }

@@ -6,7 +6,7 @@ class Logout extends Component {
 	handleLogout = () => {
 		this.props.dispatch(actions.logout(success => {
 			if (success) {
-				window.location.href = '/';
+				window.location.href = '/login';
 			}
 		}));
 	}
