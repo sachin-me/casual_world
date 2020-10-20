@@ -54,4 +54,9 @@ router.put('/list/:listid/card/:cardid/update', cardController.updateCard)
 // setting task status for a specific card
 router.post('/list/:listid/card/:cardid/updatetaskstatus', cardController.updateTaskStatus)
 
+// getting a single list
+router.get('/list/:slug', listController.getSingleList);
+
+// getting a single card
+router.get('/card/:slug', cardController.getSingleCard);
 module.exports = router;

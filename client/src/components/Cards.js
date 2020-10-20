@@ -19,13 +19,21 @@ class Cards extends Component {
 		this.props.dispatch(actions.deleteCard(listId, cardId))
 	}
 
-	handleUpdate = (cardId) => {
+	handleUpdate = (cardId, slug) => {
 		const { openCardBox } = this.state;
 		let checkId = [...openCardBox, cardId];
 		let lastCardArr = checkId.filter((val, index, arr) => arr.indexOf(val) === index);
 		this.setState({
 			isOpen: true,
 			openCardBox: lastCardArr
+		}, () => {
+			this.props.dispatch(actions.getSingleCard(slug, (success => {
+				if (success) {
+					this.setState({
+						cardName: this.props.card.cardName
+					})
+				}
+			})))
 		})
 	}
 
@@ -81,11 +89,11 @@ class Cards extends Component {
 		const { boardId } = this.state;
 		const { listId } = this.props;
 		this.props.dispatch(actions.getCards(listId));
-		this.props.dispatch(actions.getAllCards(boardId));
+		// this.props.dispatch(actions.getAllCards(boardId));
 	}
 
 	render() {
-		const { cards, listId, boardId } = this.props;
+		const { cards, listId, boardId, allLists, cardItems } = this.props;
 		const { openCardBox, openRadioButtons, isOpen, cardName } = this.state;
 		return (
 			<div>
@@ -98,7 +106,7 @@ class Cards extends Component {
 									isOpen && openCardBox && openCardBox.includes(card._id) ? (
 										<>
 											<form action=""  onSubmit={(e) => this.handleSubmit(e, card._id)}>
-												<input name='cardName' type="text" placeholder={card.cardName} value={cardName} onChange={this.handleChange} />
+												<input name='cardName' type="text" value={cardName} onChange={this.handleChange} />
 												<span onClick={() => this.handleCardClose(card._id)}>x</span>
 											</form>
 										</>
@@ -125,7 +133,7 @@ class Cards extends Component {
 											</div>
 											<div>
 												<span>{card.cardName}</span>
-												<span className='edit-icon' onClick={() => this.handleUpdate(card._id)}>
+												<span className='edit-icon' onClick={() => this.handleUpdate(card._id, card.slug)}>
 													<i className="fas fa-pencil-alt"></i>
 												</span>
 												<span className='trash-icon' onClick={() => this.handleDelete(card._id)} >
@@ -146,8 +154,10 @@ class Cards extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		// cards: state.cards.cards || [],
+		cards: state.cards.cards || [],
 		board: state.board || {},
+		card: state.card || {},
+		allLists: state.allLists || [],
 	}
 }
 

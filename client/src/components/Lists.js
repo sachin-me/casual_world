@@ -39,13 +39,21 @@ class Lists extends Component {
 		})
 	}
 
-	handleUpdate = (listId) => {
+	handleUpdate = (listId, slug) => {
 		const { openListBox } = this.state;
 		let checkId = [...openListBox, listId];
 		let lastListArr = checkId.filter((val, index, arr) => arr.indexOf(val) === index);
 		this.setState({
 			isOpen: true,
 			openListBox: lastListArr
+		}, () => {
+			this.props.dispatch(actions.singleList(slug, (success => {
+				if (success) {
+					this.setState({
+						listName: this.props.list.listName
+					})
+				}
+			})))
 		})
 	}	
 
@@ -79,9 +87,10 @@ class Lists extends Component {
 
 		this.props.dispatch(actions.getLists(boardSlug));
 		this.props.dispatch(actions.getAllCards(boardSlug));
+		this.props.dispatch(actions.getCards())
 	}
 	render() {
-		const { boardId, board } = this.props;
+		const { boardId, board, allLists } = this.props;
 		const { openInputBox, isOpen, openListBox, listName } = this.state;
 		
 		const { lists } = board;
@@ -89,21 +98,21 @@ class Lists extends Component {
 		return (
 			<>
 				{
-					lists && lists.map((list) => {
+					allLists && allLists.map((list) => {
 						return (
 							<div key={list._id} className='add-list list-card'>
 								{
 									isOpen && openListBox && openListBox.includes(list._id) ? (
 										<>
 											<form action="" onSubmit={(e) => this.handleSubmit(e, list._id)} >
-												<input name='listName' type="text" placeholder={list.listName} value={listName} onChange={this.handleChange} />
+												<input name='listName' type="text" value={listName} onChange={this.handleChange} />
 												<span onClick={() => this.handleListClose(list._id)}>x</span>
 											</form>
 										</>
 									) : (
 										<div className='list-info-wrapper'>
 											<span>{list.listName}</span>
-											<span className='edit-icon' onClick={() => this.handleUpdate(list._id)}>
+											<span className='edit-icon' onClick={() => this.handleUpdate(list._id, list.slug)}>
 												<i className="fas fa-pencil-alt"></i>
 											</span>
 											<span className='trash-icon' onClick={() => this.handleDelete(list._id)} >
@@ -113,7 +122,7 @@ class Lists extends Component {
 									)
 								}
 								<div>
-									<Cards cards={list.cards} listId={list._id} boardId={boardId} />
+									<Cards cardItems={list.cards} listId={list._id} boardId={boardId} />
 								</div>
 								<div>
 									{
@@ -140,6 +149,8 @@ class Lists extends Component {
 const mapStateToProps = (state) => {
 	return {
 		board: state.board || {},
+		list: state.list || {},
+		allLists: state.allLists || [],
 	}
 }
 

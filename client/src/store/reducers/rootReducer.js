@@ -7,7 +7,8 @@ const initState = {
 	board: {},
 	boards: [],
 	cards: {},
-	getAllCards: []
+	getAllCards: [],
+	card: {},
 }
 
 function rootReducer (state = initState, action) {
@@ -141,6 +142,13 @@ function rootReducer (state = initState, action) {
 			}
 		}
 
+		case 'GET_SINGLE_LIST': {
+			return {
+				...state,
+				list: action.list
+			}
+		}
+
 		case 'LIST_UPDATE_SUCCESS': {
 			return {
 				...state,
@@ -223,6 +231,13 @@ function rootReducer (state = initState, action) {
 			return {
 				...state,
 				error: action.error
+			}
+		}
+
+		case 'GET_SINGLE_CARD': {
+			return {
+				...state,
+				card: action.card
 			}
 		}
 

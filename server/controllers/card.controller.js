@@ -219,5 +219,22 @@ module.exports = {
 			})
 		}
 
-	}
+	},
+
+	// Getting a single card
+	getSingleCard: (req, res) => {
+		const { slug } = req.params;
+		Card.findOne({ slug: slug }, function (err, card) {
+			if (err) {
+				return res.json({
+					error: 'Falied to get single card'
+				})
+			} else {
+				return res.json({
+					message: 'Card getting successfully',
+					card
+				})
+			}
+		})
+	},
 }
