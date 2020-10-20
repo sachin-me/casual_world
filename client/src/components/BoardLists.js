@@ -22,13 +22,21 @@ class BoardLists extends Component {
 		this.props.dispatch(actions.deleteBoard(boardId));
 	}
 
-	handleUpdate = (boardId) => {
+	handleUpdate = (boardId, slug) => {
 		const { openInputBox } = this.state;
 		let checkId = [...openInputBox, boardId];
 		let lastArr = checkId.filter((val, index, arr) => arr.indexOf(val) === index);
 		this.setState({
 			isOpen: true,
 			openInputBox: lastArr
+		}, () => {
+			this.props.dispatch(actions.getSingleBoard(slug, (success => {
+				if (success) {
+					this.setState({
+						boardName: this.props.singleBoard.boardName
+					})
+				}
+			})))
 		})
 	}
 
@@ -77,14 +85,14 @@ class BoardLists extends Component {
 									isOpen && openInputBox && openInputBox.includes(board._id) ? (
 										<>
 											<form action="" onSubmit={(e) => this.handleSubmit(e, board._id)}>
-												<input name='boardName' type="text" placeholder={board.boardName} value={boardName} onChange ={this.handleChange} />
+												<input name='boardName' type="text" value={boardName} onChange ={this.handleChange} />
 												<span onClick={() => this.handleClose(board._id)}>x</span>
 											</form>
 										</>
 									) : (
 										<>
 											<span onClick={() => this.handleClick(board.slug)}>{board.boardName}</span>
-											<span className='edit-icon' onClick={() => this.handleUpdate(board._id)} >
+											<span className='edit-icon' onClick={() => this.handleUpdate(board._id, board.slug)} >
 												<i className="fas fa-pencil-alt"></i>
 											</span>
 											<span className='trash-icon' onClick={() => this.handleDelete(board._id)} >
@@ -105,6 +113,7 @@ class BoardLists extends Component {
 const mapStateToProps = (state) => {
 	return {
 		boards: state.boards || [],
+		singleBoard: state.board || {}
 	}
 }
 

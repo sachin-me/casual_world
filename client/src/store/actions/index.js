@@ -312,6 +312,26 @@ const actions = {
 			})
 	},
 
+	singleList: (slug, cb) => dispatch => {
+		fetch(`${uri}/list/${slug}`, {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(list => {
+				if (list.message) {
+					dispatch({
+						type: 'GET_SINGLE_LIST',
+						list: list.list
+					})
+					cb(true)
+				} else {
+					cb(false)
+				}
+			})
+	},
+
 	// Creating new card
 	createCard: (data, boardId, listId, cb) => dispatch => {
 		fetch(`${uri}/board/${boardId}/list/${listId}/createcard`, {
@@ -434,6 +454,27 @@ const actions = {
 						error: cards.error
 					})
 					cb(false)
+				}
+			})
+	},
+
+	// Getting a single card
+	getSingleCard: (slug, cb) => dispatch => {
+		fetch(`${uri}/card/${slug}`, {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(card => {
+				if (card.message) {
+					dispatch({
+						type: 'GET_SINGLE_CARD',
+						card: card.card
+					})
+					cb(true);
+				} else {
+					cb(false);
 				}
 			})
 	},

@@ -35,7 +35,7 @@ class CreateCard extends Component {
 		this.props.dispatch(actions.createCard(this.state, boardId, listId, success => {
 			if (success) {
 				this.props.dispatch(actions.getCards(listId))
-				this.props.dispatch(actions.getAllCards(slug));
+				// this.props.dispatch(actions.getAllCards(slug));
 			}
 		}))
 		this.setState({

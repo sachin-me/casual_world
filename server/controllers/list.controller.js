@@ -86,5 +86,21 @@ module.exports = {
 				})
 			})
 		})
+	},
+
+	getSingleList: (req, res) => {
+		let { slug } = req.params;
+		List.findOne({ slug: slug }, function (err, list) {
+			if (err) {
+				return res.json({
+					error: 'Could not find list'
+				})
+			} else {
+				return res.json({
+					message: 'List getting successfully',
+					list
+				})
+			}
+		})
 	}
 }
