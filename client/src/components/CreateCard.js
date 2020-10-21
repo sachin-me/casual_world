@@ -30,7 +30,6 @@ class CreateCard extends Component {
 		if (!cardName || !dueDate) return
 
 		const data = { cardName, dueDate }
-		console.log(this.state)
 		// socket.emit('notifications', this.state);
 		this.props.dispatch(actions.createCard(this.state, boardId, listId, success => {
 			if (success) {

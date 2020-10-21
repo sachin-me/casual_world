@@ -87,18 +87,17 @@ class Lists extends Component {
 
 		this.props.dispatch(actions.getLists(boardSlug));
 		this.props.dispatch(actions.getAllCards(boardSlug));
-		this.props.dispatch(actions.getCards())
 	}
 	render() {
-		const { boardId, board, allLists } = this.props;
+		const { boardId, board, allLists, getAllCards } = this.props;
 		const { openInputBox, isOpen, openListBox, listName } = this.state;
 		
-		const { lists } = board;
+		const { lists, slug } = board;
 
 		return (
 			<>
 				{
-					allLists && allLists.map((list) => {
+					getAllCards && getAllCards.map((list) => {
 						return (
 							<div key={list._id} className='add-list list-card'>
 								{
@@ -122,7 +121,7 @@ class Lists extends Component {
 									)
 								}
 								<div>
-									<Cards cardItems={list.cards} listId={list._id} boardId={boardId} />
+									<Cards cardItems={list.cards} listId={list._id} boardId={boardId} boardSlug={slug} />
 								</div>
 								<div>
 									{
@@ -151,6 +150,7 @@ const mapStateToProps = (state) => {
 		board: state.board || {},
 		list: state.list || {},
 		allLists: state.allLists || [],
+		getAllCards: state.getAllCards || [],
 	}
 }
 

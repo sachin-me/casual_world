@@ -20,7 +20,8 @@ module.exports = {
 			const newCard = new Card({
 				cardName,
 				dueDate,
-				assignee: user._id
+				assignee: user._id,
+				list: listId
 			})
 			newCard.save((err, card) => {
 				if (err) return res.json({
