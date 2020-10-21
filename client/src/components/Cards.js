@@ -11,7 +11,8 @@ class Cards extends Component {
 		isOpen: false,
 		listName: '',
 		openCardBox: [],
-		openRadioButtons: []
+		openRadioButtons: [],
+		boardSlug: this.props.boardSlug,
 	}
 
 	handleDelete = (cardId) => {
@@ -86,19 +87,18 @@ class Cards extends Component {
 	}
 
 	componentDidMount = () => {
-		const { boardId } = this.state;
 		const { listId } = this.props;
 		this.props.dispatch(actions.getCards(listId));
-		// this.props.dispatch(actions.getAllCards(boardId));
 	}
 
 	render() {
-		const { cards, listId, boardId, allLists, cardItems } = this.props;
+		const { cards, listId, boardId, allLists, cardItems, board } = this.props;
 		const { openCardBox, openRadioButtons, isOpen, cardName } = this.state;
+		
 		return (
 			<div>
 				{
-					cards && cards.map((card) => {
+					cardItems && cardItems.map((card) => {
 						return (
 							<div key={card._id} className='subtask-card'>
 								<div className='task-status'>{card.status}</div>
