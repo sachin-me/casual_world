@@ -87,6 +87,7 @@ class Lists extends Component {
 
 		this.props.dispatch(actions.getLists(boardSlug));
 		this.props.dispatch(actions.getAllCards(boardSlug));
+		this.props.dispatch(actions.getCards())
 	}
 	render() {
 		const { boardId, board, allLists, getAllCards } = this.props;
