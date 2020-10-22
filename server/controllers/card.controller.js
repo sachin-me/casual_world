@@ -40,13 +40,32 @@ module.exports = {
 					read: false
 				})
 
-				newNotification.save();
+				newNotification.save(((err, data) => {
+					// console.log(data, 'data after saving notificaiton in db');
+					if (err) {
+						return res.json({
+							error: 'Failed to create notification'
+						})
+					} else {
+						Card.findByIdAndUpdate(data.card, {
+							$push: {
+								notifications: data._id
+							} 
+						}, { new: true, upsert: true }, (err, res) => {
+							if (err) {
+								throw new Error(err);
+							}
+							console.log(res, 'res after updating card');
+						})
+					}
+				}));
 
 				List.findByIdAndUpdate(listId, {
 					$push: {
 						cards: card._id
 					}
 				}, { new: true }, (err, createdCard) => {
+					console.log(createdCard, 'created card');
 					if (err) return res.json({
 						error: 'Could not update list'
 					})
@@ -93,10 +112,10 @@ module.exports = {
 	},
 
 	// Deleting a particular card
-	deleteCard: (req, res) => {
+	deleteCard: async (req, res) => {
 		let listId = req.params.listid;
 		let cardId = req.params.cardid;
-		Card.findByIdAndDelete(cardId, (err, card) => {
+		await Card.findByIdAndDelete(cardId, (err, card) => {
 			if (err) {
 				return res.json({
 					error: 'Could not delete card'
@@ -126,6 +145,8 @@ module.exports = {
 				})
 			})
 		})
+
+		const deleteNotification = await Notification.findOneAndDelete({ card: cardId });
 	},
 
 	// Updating a new card
