@@ -1,12 +1,15 @@
 const List = require('../models/List');
 const Board = require('../models/Board');
+const Notification = require('../models/Notification');
+const Card = require('../models/Card');
 
 module.exports = {
 	createList: (req, res) => {
 		const { listName } = req.body;
 		const boardId = req.params.id;
 		const newList = new List({
-			listName
+			listName,
+			board: boardId,
 		})
 		newList.save((err, list) => {
 			if (err) return res.json({
@@ -64,28 +67,35 @@ module.exports = {
 	},
 
 	// Deleting a particular list
-	deleteList: (req, res) => {
+	deleteList: async (req, res) => {
 		let boardId = req.params.boardid;
 		let listid = req.params.listid;
-		console.log(boardId, 'checking board Id')
-		List.findByIdAndDelete(listid, (err, list) => {
+		 
+		List.findByIdAndDelete(listid, async (err, list) => {
 			if (err) return res.json({
 				error: 'Could not delete list'
 			})
-			Board.findByIdAndUpdate(boardId, {
-				$pull: {
-					lists: list._id
-				}
-			}, { new: true }).populate('lists').exec((err, updatedList) => {
-				if (err) return res.json({
-					error: 'Could not update board'
+			if (list) {
+				const deletedCard = await Card.findOneAndDelete({ list: listid });
+				const deleteNotification = await Notification.findOneAndDelete({ card: deletedCard._id });
+				
+				Board.findByIdAndUpdate(boardId, {
+					$pull: {
+						lists: listid
+					}
+				}, { new: true }).populate('lists').exec((err, updatedList) => {
+					if (err) return res.json({
+						error: 'Could not update board'
+					})
+					return res.json({
+						message: 'List deleted, successfully',
+						updatedList: updatedList.lists
+					})
 				})
-				return res.json({
-					message: 'List deleted, successfully',
-					updatedList: updatedList.lists
-				})
-			})
+				
+			}
 		})
+		
 	},
 
 	getSingleList: (req, res) => {

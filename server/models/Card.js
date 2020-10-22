@@ -13,6 +13,7 @@ const CardSchema = new Schema({
 	assignee: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	slug: { type: String, unique: true },
 	list: { type: Schema.Types.ObjectId, ref: 'List' },
+	notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
 })
 
 CardSchema.pre('save', function(next) {

@@ -1,6 +1,8 @@
 const Board = require('../models/Board');
 const User = require('../models/User');
 const JWT = require('jsonwebtoken');
+const List = require('../models/List');
+const Card = require('../models/Card');
 
 module.exports = {
 	createBoard: (req, res) => {
@@ -74,29 +76,35 @@ module.exports = {
 	},
 
 	// Deleting a particular board
-	deleteBoard: (req, res) => {
+	deleteBoard: async (req, res) => {
 		let boardId = req.params.boardid;
 		const token = req.cookies.token;
 		const user = JWT.verify(token, 'secret');
 		const { id } = user;
 
-		Board.findOneAndDelete(boardId, (err, board) => {
+		Board.findOneAndDelete(boardId, async (err, board) => {
 			if (err) return res.json({
 				error: 'Could not delete board'
 			})
-			User.findOneAndUpdate({ _id: id }, {
-				$pull: {
-					boards: board._id
-				}
-			}, { new: true }).populate('boards').exec((err, updatedBoard) => {
-				if (err) return res.json({
-					error: 'Could not update user'
+			if (board) {
+				const deletedList = await List.findOneAndDelete({ board: boardId });
+				const deletedCard = await Card.findOneAndDelete({ list: deletedList._id });
+				const deleteNotification = await Notification.findOneAndDelete({ card: deletedCard._id });
+
+				User.findOneAndUpdate({ _id: id }, {
+					$pull: {
+						boards: board._id
+					}
+				}, { new: true }).populate('boards').exec((err, updatedBoard) => {
+					if (err) return res.json({
+						error: 'Could not update user'
+					})
+					return res.json({
+						message: 'Board deleted, successfully',
+						updatedBoard: updatedBoard.boards
+					})
 				})
-				return res.json({
-					message: 'Board deleted, successfully',
-					updatedBoard: updatedBoard.boards
-				})
-			})
+			}
 		})
 	},
 
