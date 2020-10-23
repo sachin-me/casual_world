@@ -79,7 +79,10 @@ class Lists extends Component {
 
 	handleDelete = (listId) => {
 		const { boardId } = this.props;
+		const { boardSlug } = this.state;
+
 		this.props.dispatch(actions.deleteList(boardId, listId))
+		this.props.dispatch(actions.getAllCards(boardSlug));
 	}
 
 	componentDidMount = () => {
