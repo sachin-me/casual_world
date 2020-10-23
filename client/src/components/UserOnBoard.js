@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import UserBoard from './UserBoard';
+import UserBoard from './Common/UserBoard';
 import HomeIcon from '../containers/HomeIcon';
 import CreateBoard from './CreateBoard';
 import actions from '../store/actions';
