@@ -9,7 +9,6 @@ class Main extends Component {
   render() {
     const { currentUser } = this.props;
     const id = currentUser._id;
-    console.log('main');
     return (
       <div className="route-wrapper">
         <Router>

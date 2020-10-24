@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     const { loading } = this.state;
     return (
-      <div className="app">
+      <div>
         {loading ? (
           <Main />
         ) : (
