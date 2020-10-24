@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import Navbar from './Navbar';
 import PublicRoutes from '../Routes/PublicRoutes';
 import AuthRoutes from '../Routes/AuthRoutes';

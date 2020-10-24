@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 
 import Main from './components/Main';
-import './App.scss';
 import api from './utility/api';
 
 class App extends Component {
