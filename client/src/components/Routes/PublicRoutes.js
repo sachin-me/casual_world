@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Hero from '../Hero';
-import Login from '../Login';
-import Signup from '../Signup';
+import Hero from '../PublicRoutes/Hero';
+import Login from '../PublicRoutes/Login';
+import Signup from '../PublicRoutes/Signup';
 
 function PublicRoutes() {
   return (

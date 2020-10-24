@@ -62,7 +62,18 @@ class Navbar extends Component {
                   </Link>
                 </>
               ) : (
-                ''
+                <div className="user-entry">
+                  <Link to="/login" className="login-btn">
+                    <button className="button is-link is-inverted is-outlined">
+                      Log in
+                    </button>
+                  </Link>
+                  <Link to="/signup" className="signup-btn">
+                    <button className="button is-link is-inverted is-outlined">
+                      Sign up
+                    </button>
+                  </Link>
+                </div>
               )}
             </div>
           </div>

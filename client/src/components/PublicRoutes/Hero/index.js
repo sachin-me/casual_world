@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import Footer from './Footer';
-import banner from '../../images/banner.svg';
+import banner from '../../../images/banner.svg';
 
 class Hero extends Component {
   render() {
     return (
       <>
-        <div className="user-entry">
-          <Link to="/login" className="login-btn">
-            <button className="button is-link is-inverted is-outlined">
-              Log in
-            </button>
-          </Link>
-          <Link to="/signup" className="signup-btn">
-            <button className="button is-link is-inverted is-outlined">
-              Sign up
-            </button>
-          </Link>
-        </div>
         <section className="hero is-medium is-light is-bold">
           <div className="hero-body">
             <div className="container columns">
