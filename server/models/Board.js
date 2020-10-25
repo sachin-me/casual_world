@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const BoardSchema = new Schema({
 	boardName: { type: String , required: true},
 	lists: [{type: Schema.Types.ObjectId, ref: 'List'}],
-	slug: { type: String, unique: true }
+	slug: { type: String, unique: true },
+	teamMembers: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 })
 
 BoardSchema.pre('save', function(next) {
