@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
+import { Navbar, Button, Nav } from 'react-bootstrap';
 
 import HomeIcon from '../../../containers/HomeIcon';
 import UserBoard from '../../Common/UserBoard';
-import Create from './Create';
-import Notification from './Notification';
 import Profile from './Profile';
 
 const socket = io('http://localhost:8000');
 
-class Navbar extends Component {
+class Navbars extends Component {
   state = {
     notifications: [],
   };
@@ -32,53 +31,55 @@ class Navbar extends Component {
     const { currentUser } = this.props;
     const userId = currentUser._id || '';
     return (
-      <div>
-        <nav className="navbar" role="navigation" aria-label="main navigation">
-          <div id="navbarBasicExample" className="navbar-menu">
-            <div className="navbar-start">
-              <Link to="/" className="navbar-item is-light">
+      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Link to="/">
+              <Button>
                 <HomeIcon />
-              </Link>
-              {userId ? (
-                <Link to={`/getboards`} className="navbar-item is-light">
+              </Button>
+            </Link>
+
+            {userId ? (
+              <Link to="/getboards">
+                <Button>
                   <UserBoard />
-                </Link>
-              ) : (
-                <div></div>
-              )}
-            </div>
-            <div className="navbar-end">
-              {userId ? (
-                <>
-                  <a className="navbar-item is-light">
-                    <Create />
-                  </a>
-                  <a className="navbar-item is-light">
-                    <Notification />
-                    <span>{notifications ? notifications.length : ''}</span>
-                  </a>
-                  <Link to={`/profile`} className="navbar-item is-light">
-                    <Profile />
-                  </Link>
-                </>
-              ) : (
-                <div className="user-entry">
-                  <Link to="/login" className="login-btn">
-                    <button className="button is-link is-inverted is-outlined">
-                      Log in
-                    </button>
-                  </Link>
-                  <Link to="/signup" className="signup-btn">
-                    <button className="button is-link is-inverted is-outlined">
-                      Sign up
-                    </button>
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
-        </nav>
-      </div>
+                </Button>
+              </Link>
+            ) : null}
+          </Nav>
+
+          {userId ? (
+            <Nav>
+              <Link to="#">
+                <Button>+</Button>
+              </Link>
+              <Link to="#">
+                <Button>
+                  <span>{notifications ? notifications.length : ''}</span>{' '}
+                  <i className="fas fa-bell"></i>
+                </Button>
+              </Link>
+              <Link to="/profile">
+                <Button>
+                  <Profile />
+                </Button>
+              </Link>
+            </Nav>
+          ) : (
+            <Nav>
+              <Link to="/login">
+                <Button>Log in</Button>
+              </Link>
+
+              <Link to="/signup">
+                <Button>Sign up</Button>
+              </Link>
+            </Nav>
+          )}
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
@@ -89,4 +90,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(Navbars);
