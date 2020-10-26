@@ -14,8 +14,8 @@ class Signup extends Component {
     name: '',
     email: '',
     password: '',
-    message: '',
-    error: '',
+    message: null,
+    error: null,
     validEmail: true,
     validPassword: true,
   };
@@ -122,10 +122,11 @@ class Signup extends Component {
           />
           <SubmitButton text="Sign up" />
         </form>
-        <Message message={message} error={error} />
-        <div className="goto-login center">
-          <span>Already has an account, </span>
-          <Link to="/login">login?</Link>
+        {(!!error && <Message message={message} error={error} />) || null}
+
+        <div className="mt-2 center">
+          <span>Already has an account? </span>
+          <Link to="/login">login</Link>
         </div>
       </div>
     );
