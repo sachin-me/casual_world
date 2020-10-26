@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Navbar from './Navbar';
+import Navbars from './Navbar';
 import PublicRoutes from '../Routes/PublicRoutes';
 import AuthRoutes from '../Routes/AuthRoutes';
 
@@ -11,14 +11,10 @@ class Main extends Component {
     const { currentUser } = this.props;
     const id = currentUser._id;
     return (
-      <div className="route-wrapper">
-        <Router>
-          <>
-            <Navbar />
-            <Switch>{id ? <AuthRoutes /> : <PublicRoutes />}</Switch>
-          </>
-        </Router>
-      </div>
+      <Router>
+        <Navbars />
+        <Switch>{id ? <AuthRoutes /> : <PublicRoutes />}</Switch>
+      </Router>
     );
   }
 }
