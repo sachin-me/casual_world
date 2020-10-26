@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { Navbar, Button, Nav } from 'react-bootstrap';
 
 import HomeIcon from '../../../containers/HomeIcon';
-import UserBoard from '../../Common/UserBoard';
+import UserBoard from '../../../containers/UserBoard';
 import Profile from './Profile';
 
 const socket = io('http://localhost:8000');
@@ -42,7 +42,7 @@ class Navbars extends Component {
             </Link>
 
             {userId ? (
-              <Link to="/getboards">
+              <Link to="/boards">
                 <Button>
                   <UserBoard />
                 </Button>

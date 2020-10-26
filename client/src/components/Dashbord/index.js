@@ -3,13 +3,7 @@ import UserOnBoard from './UserOnBoard';
 
 class Dashboard extends Component {
   render() {
-    return (
-      <>
-        <div>
-          <UserOnBoard />
-        </div>
-      </>
-    );
+    return <UserOnBoard />;
   }
 }
 
