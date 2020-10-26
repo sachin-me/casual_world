@@ -116,7 +116,7 @@ class Login extends Component {
         </form>
         <Message message={message} error={error} />
         <div className="center">
-          <Link to="/signup">Create an account?</Link>
+          <Link to="/signup">Create an account.</Link>
         </div>
       </div>
     );

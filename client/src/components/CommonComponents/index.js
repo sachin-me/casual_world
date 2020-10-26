@@ -2,7 +2,7 @@ import React from 'react';
 
 import helperFunctions from '../../utility';
 let { validateEmail, validatePassword, toProperCase } = helperFunctions;
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 
 const commonComponents = {
   InputBox: (props) => {
@@ -25,9 +25,11 @@ const commonComponents = {
   Message: (props) => {
     const { message, error } = props;
     return (
-      <div className="signup-status center has-text-danger">
-        {message || error}
-      </div>
+      (message || error) && (
+        <div className="mt-3">
+          <Alert variant="danger">{message || error}</Alert>
+        </div>
+      )
     );
   },
 
