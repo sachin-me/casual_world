@@ -1,8 +1,9 @@
 $theme-colors: (
-  'primary': #0074d4,
+  'primary': #27a1e8,
   'danger': #ff4136,
 );
 @import '~bootstrap/scss/bootstrap.scss';
+
 
 // Form
 
@@ -531,18 +532,6 @@ nav.navbar {
         color: #fff;
       }
     }
-  }
-}
-
-// Footer
-.footer {
-  background: #27a1e8 !important;
-  padding: 1.9rem !important;
-  bottom: 0 !important;
-  position: absolute !important;
-  width: 100% !important;
-  a {
-    color: #fff !important;
   }
 }
 
